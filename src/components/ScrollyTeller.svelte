@@ -12,8 +12,10 @@
   let chartData = [];
 
   async function loadData() {
-    nbaData = await d3.csv('static/nba_data.csv');
-    updateChartData(selectedYear);
+    await d3.csv('nba_data.csv').then(data => {
+      nbaData = data;
+      updateChartData(selectedYear);
+    });
   }
 
   function updateChartData(year) {
@@ -60,7 +62,8 @@
 
   <div class="foreground" slot="foreground">
     <div>
-      <section>This is the 2003-2004 section.</section>
+      <h1>NBA Scoring Leaders</h1>
+      <ScoringLeadersChart chartData={nbaData}/>
     </div>
     <section>This is the 2004-2005 section.</section>
     <section>This is the 2005-2006 section.</section>
@@ -89,7 +92,7 @@
     width: 100%;
     height: 100vh;
     position: relative;
-    background-image: url(static/news.jpeg);
+    background-image: url(news.jpeg);
   }
 
   .foreground {

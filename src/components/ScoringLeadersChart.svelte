@@ -11,6 +11,7 @@
   $: if (chartData.length > 0) {
     drawChart();
   }
+  $: console.log(chartData);
 
   function drawChart() {
     const svg = d3.select('#bar-chart').select('svg');
