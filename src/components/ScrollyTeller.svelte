@@ -61,10 +61,10 @@
   </div>
 
   <div class="foreground" slot="foreground">
-    <div>
+    <section>
       <h1>NBA Scoring Leaders</h1>
       <ScoringLeadersChart chartData={nbaData}/>
-    </div>
+    </section>
     <section>This is the 2004-2005 section.</section>
     <section>This is the 2005-2006 section.</section>
     <section>This is the 2006-2007 section.</section>
@@ -92,7 +92,7 @@
     width: 100%;
     height: 100vh;
     position: relative;
-    background-image: url(news.jpeg);
+    /* background-image: url(news.jpeg); */
   }
 
   .foreground {
