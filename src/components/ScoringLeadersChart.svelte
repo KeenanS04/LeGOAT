@@ -53,7 +53,7 @@
     .attr("y", d => y(d['player']))
     .attr("width", d => x(d['score']))
     .attr("height", y.bandwidth())
-    .attr("fill", "#69b3a2")
+    .attr("fill", d => d['player'].includes('LeBron James') ? 'red' : 'steelblue')
   }
   // onMount(() => {
   //   drawChart();
