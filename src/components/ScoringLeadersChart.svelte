@@ -1,7 +1,6 @@
 <script>
   import { onMount } from 'svelte';
   import * as d3 from 'd3';
-    import { draw } from 'svelte/transition';
 
   export let chartData = [];
 
@@ -10,13 +9,17 @@
           width = 500 - margin.left - margin.right,
           height = 400 - margin.top - margin.bottom;
 
-
-  onMount(() => {
-    drawChart();
-  });
+  $: {
+    // console.log(chartData);
+    if (chartData.length > 0) {
+      drawChart();
+    }
+  }
 
   function drawChart() {
-    var svg = d3.select("#bar-chart")
+    console.log(chartData);
+    var svg = d3.select("#bar-chart").selectAll("svg").remove();
+    svg = d3.select("#bar-chart")
       .append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
@@ -25,7 +28,7 @@
               "translate(" + margin.left + "," + margin.top + ")");
 
               const x = d3.scaleLinear()
-    .domain([0, d3.max(chartData, d => d['2023'])])
+    .domain([0, d3.max(chartData, d => d['score'])])
     .range([ 0, width]);
   svg.append("g")
     .attr("transform", `translate(0, ${height})`)
@@ -37,7 +40,7 @@
   // Y axis
   const y = d3.scaleBand()
     .range([ 0, height ])
-    .domain(chartData.map(d => d['Leaders Names']))
+    .domain(chartData.map(d => d['player']))
     .padding(.1);
   svg.append("g")
     .call(d3.axisLeft(y))
@@ -47,8 +50,8 @@
     .data(chartData)
     .join("rect")
     .attr("x", x(0) )
-    .attr("y", d => y(d['Leaders Names']))
-    .attr("width", d => x(d['2023']))
+    .attr("y", d => y(d['player']))
+    .attr("width", d => x(d['score']))
     .attr("height", y.bandwidth())
     .attr("fill", "#69b3a2")
   }

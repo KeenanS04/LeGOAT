@@ -7,8 +7,8 @@
   let count, index, offset, progress;
   let width, height;
 
-  let nbaData; 
-  let selectedYear = 2023; 
+  let nbaData;
+  let selectedYear = 1960;
   let chartData = [];
 
   async function loadData() {
@@ -18,12 +18,17 @@
     });
   }
 
+  $: if (nbaData) {
+    updateChartData(selectedYear+10*index)
+  }
+  // $: console.log(chartData);
+
   function updateChartData(year) {
     const scores = nbaData.map(d => ({
       player: d['Leaders Names'],
       score: +d[year]
       //imageURL: d['Image URL'] // Assuming this is where player images are stored
-    })).filter(d => d.score > 0); 
+    })); 
 
     scores.sort((a, b) => b.score - a.score);
 
@@ -58,12 +63,12 @@
       bind:clientWidth={width} 
       bind:clientHeight={height}
     >
+    <ScoringLeadersChart chartData={chartData} index={index}/>
   </div>
 
   <div class="foreground" slot="foreground">
     <section>
       <h1>NBA Scoring Leaders</h1>
-      <ScoringLeadersChart chartData={nbaData}/>
     </section>
     <section>This is the 2004-2005 section.</section>
     <section>This is the 2005-2006 section.</section>
@@ -93,6 +98,7 @@
     height: 100vh;
     position: relative;
     /* background-image: url(news.jpeg); */
+    background-color: #f5f5dc;
   }
 
   .foreground {
@@ -104,7 +110,6 @@
 
   section {
     height: 100vh;
-    background-color: #f5f5dc;
     border: 3px solid #800000;
     text-align: center;
     max-width: 100%; 
