@@ -12,11 +12,11 @@
     let zoomLevel;
 
     const locations = [
-        { name: "Akron", coords: [-81.519, 41.081], description: "LeBron's Hometown" },
+        { name: "Akron", coords: [-81.519, 41.081], description: "LeBron's Hometown", color: "#000000" },
         // { name: "Cleveland", coords: [-81.6944, 41.4993], description: "First & Third NBA Team" },
-        { name: "Miami", coords: [-80.1918, 25.7617], description: "Second NBA Team" },
-        { name: "Cleveland", coords: [-81.6944, 41.4993], description: "First & Third NBA Team" },
-        { name: "Los Angeles", coords: [-118.2437, 34.0522], description: "Fourth NBA Team" },
+        { name: "Miami", coords: [-80.1918, 25.7617], description: "Second NBA Team", color: "#98002E" },
+        { name: "Cleveland", coords: [-81.6944, 41.4993], description: "First & Third NBA Team", color: "#860038"},
+        { name: "Los Angeles", coords: [-118.2437, 34.0522], description: "Fourth NBA Team", color: "#FDB927"},
     ];
 
     let currentLocation = locations[0]; // Default to Akron
@@ -65,6 +65,61 @@
         map.on("move", updateBounds);
       });
     });
+
+    function drawJourneyLine() {
+        if (index === 0) return; // No line to draw for the first index (Akron)
+    
+        const from = locations[index - 1].coords;
+        const to = locations[index].coords;
+        const color = locations[index].color; // Color of the destination team
+        
+        // Calculate intermediate point for the curve
+        const midPointLat = (from[1] + to[1]) / 2;
+        const midPointLng = (from[0] + to[0]) / 2;
+        
+        // Adjust midPointLng to create curvature
+        // This adjustment factor controls the curve's "strength" and direction
+        const curveAdjustment = 2; // Adjust this value based on desired curvature
+        const midPointLngAdjusted = midPointLng + (index % 2 === 0 ? curveAdjustment : -curveAdjustment);
+        
+        const curvedCoordinates = [from, [midPointLngAdjusted, midPointLat], to];
+
+        const lineData = {
+            'type': 'Feature',
+            'properties': {},
+            'geometry': {
+                'type': 'LineString',
+                'coordinates': curvedCoordinates
+            }
+        };
+
+        // Add or update the source and layer as before
+        if (map.getSource('journeyLine')) {
+            map.getSource('journeyLine').setData(lineData);
+        } else {
+            map.addSource('journeyLine', {
+                'type': 'geojson',
+                'data': lineData
+            });
+
+            map.addLayer({
+                'id': 'journeyLine',
+                'type': 'line',
+                'source': 'journeyLine',
+                'layout': {
+                    'line-join': 'round',
+                    'line-cap': 'round'
+                },
+                'paint': {
+                    'line-color': color,
+                    'line-width': 4
+                }
+            });
+        }
+
+        // Ensure the line color updates for each team
+        map.setPaintProperty('journeyLine', 'line-color', color);
+    }
     
     function updateBounds() {
         const bounds = map.getBounds();
@@ -82,6 +137,7 @@
     $: if (map && locations[index]) {
         currentLocation = locations[index];
         map.flyTo({ center: currentLocation.coords, zoom: zoomLevel });
+        drawJourneyLine();
         // Optional: Add markers or other visual elements here
     }
 </script>
