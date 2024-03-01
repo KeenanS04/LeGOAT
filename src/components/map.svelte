@@ -1,92 +1,4 @@
-<!-- <script>
-    import { onMount } from 'svelte';
-    import mapboxgl from 'mapbox-gl';
-  
-    // Set your Mapbox access token
-    mapboxgl.accessToken = 'pk.eyJ1IjoiYW11anJhbCIsImEiOiJjbHNqbW9rZzgycHhvMmtzYmp5eTJwNnJ5In0.OA2ad1hWPGAfF7QQOGURJQ';
-  
-    onMount(() => {
-      const map = new mapboxgl.Map({
-        container: 'map', // container ID
-        style: 'mapbox://styles/mapbox/streets-v11', // style URL
-        center: [-81.6944, 41.4993], // starting position [lng, lat]
-        zoom: 5 // starting zoom
-      });
-
-    //   const locations = [
-    //         { name: "Akron", coords: [-81.519, 41.081], description: "LeBron's Hometown" },
-    //         { name: "Cleveland", coords: [-81.6944, 41.4993], description: "First & Third NBA Team" },
-    //         { name: "Miami", coords: [-80.1918, 25.7617], description: "Second NBA Team" },
-    //         { name: "Los Angeles", coords: [-118.2437, 34.0522], description: "Fourth NBA Team" },
-    //     ];
-        
-      // Add a line tracing LeBron's career journey
-      map.on('load', () => {
-        map.addSource('route', {
-          'type': 'geojson',
-          'data': {
-            'type': 'Feature',
-            'properties': {},
-            'geometry': {
-              'type': 'LineString',
-              'coordinates': [
-                [-81.3839, 40.8136], // Akron, OH (High School)
-                [-81.6944, 41.4993], // Cleveland, OH (Cavs)
-                [-80.1937, 25.7617], // Miami, FL (Heat)
-                [-81.6944, 41.4993], // Cleveland, OH (Cavs, Return)
-                [-118.2437, 34.0522] // Los Angeles, CA (Lakers)
-              ]
-            }
-          }
-        });
-  
-        map.addLayer({
-          'id': 'route',
-          'type': 'line',
-          'source': 'route',
-          'layout': {
-            'line-join': 'round',
-            'line-cap': 'round'
-          },
-          'paint': {
-            'line-color': '#888',
-            'line-width': 6
-          }
-        });
-      });
-    });
-
-    $: if (map && nbaData) {
-        let locations = [
-            { center: [-81.3839, 40.8136], zoom: 10 }, // Akron
-            { center: [-81.6944, 41.4993], zoom: 12 }, // Cleveland
-            { center: [-80.1937, 25.7617], zoom: 12 }, // Miami
-            { center: [-81.6944, 41.4993], zoom: 12 }, // Cleveland, Return
-            { center: [-118.2437, 34.0522], zoom: 12 } // Los Angeles
-        ];
-
-        let currentLocation = locations[index]; // Adjust based on how your sections are indexed
-        map.flyTo({
-            center: currentLocation.center,
-            zoom: currentLocation.zoom
-        });
-    }
-  </script>
-  
-  <div id="map" class="map-container"></div>
-  
-  <style>
-    .map-container {
-      position: absolute;
-      top: 0;
-      right: 0;
-      left: 0;
-      bottom: 0;
-    }
-    /* Ensure the map and foreground content don't overlap in an undesired way */
-  </style> -->
-
-  <script>
+<script>
     import mapboxgl from "mapbox-gl";
     import { onMount } from "svelte";
     export let index;
@@ -101,8 +13,9 @@
 
     const locations = [
         { name: "Akron", coords: [-81.519, 41.081], description: "LeBron's Hometown" },
-        { name: "Cleveland", coords: [-81.6944, 41.4993], description: "First & Third NBA Team" },
+        // { name: "Cleveland", coords: [-81.6944, 41.4993], description: "First & Third NBA Team" },
         { name: "Miami", coords: [-80.1918, 25.7617], description: "Second NBA Team" },
+        { name: "Cleveland", coords: [-81.6944, 41.4993], description: "First & Third NBA Team" },
         { name: "Los Angeles", coords: [-118.2437, 34.0522], description: "Fourth NBA Team" },
     ];
 
