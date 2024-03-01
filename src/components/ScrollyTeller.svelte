@@ -3,6 +3,7 @@
   import { fade } from 'svelte/transition';
   import Scroller from "@sveltejs/svelte-scroller";
   import ScoringLeadersChart from './ScoringLeadersChart.svelte';
+  import MapComp from './map.svelte';
   import * as d3 from 'd3';
 
   let count, index, offset, progress;
@@ -91,13 +92,17 @@
   bind:offset
   bind:progress
 >
-  <div 
+  <!-- <div 
       class="background" 
       slot="background" 
       bind:clientWidth={width} 
       bind:clientHeight={height}
     >
     <ScoringLeadersChart chartData={chartData} index={index}/>
+  </div> -->
+
+  <div slot="background">
+    <MapComp {index} />
   </div>
 
   <div class="foreground" slot="foreground">
