@@ -5,9 +5,9 @@
   export let chartData = [];
 
 
-  const margin = { top: 30, right: 30, bottom: 70, left: 140 },
-          width = 500 - margin.left - margin.right,
-          height = 400 - margin.top - margin.bottom;
+  const margin = { top: 100, right: 30, bottom: 70, left: 140 },
+          width = 800 - margin.left - margin.right,
+          height = 600 - margin.top - margin.bottom;
 
   $: {
     // console.log(chartData);

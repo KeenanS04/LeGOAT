@@ -54,7 +54,7 @@
   }
 
   $: if (nbaData) {
-    updateChartData(selectedYear+10*index)
+    updateChartData(selectedYear+10*index <=  2023 ? selectedYear+10*index : 2023);
   }
   // $: console.log(chartData);
 
@@ -92,20 +92,32 @@
   bind:offset
   bind:progress
 >
-  <!-- <div 
+  <div 
       class="background" 
       slot="background" 
       bind:clientWidth={width} 
       bind:clientHeight={height}
     >
+    <h1 style="text-align: center; padding: 10px"> {selectedYear+10*index <=  2023 ? selectedYear+10*index : 2023}</h1>
     <ScoringLeadersChart chartData={chartData} index={index}/>
-  </div> -->
-
-  <div slot="background">
-    <MapComp {index} />
   </div>
 
   <div class="foreground" slot="foreground">
+    <section></section>
+    <section></section>
+    <section></section>
+    <section></section>
+    <section></section>
+    <section></section>
+    <section></section>
+    <section></section>
+  </div>
+
+  <!-- <div slot="background">
+    <MapComp {index} />
+  </div> -->
+
+  <!-- <div class="foreground" slot="foreground">
     {#each sections as section, i}
       <section>
         <h1>{section.title}</h1>
@@ -116,7 +128,7 @@
         {/if}
       </section>
     {/each}
-  </div>
+  </div> -->
 </Scroller>
 
 <style>
@@ -126,6 +138,7 @@
     position: relative;
     /* background-image: url(news.jpeg); */
     background-color: #f5f5dc;
+    padding: 0;
   }
 
   .foreground {
@@ -137,7 +150,7 @@
 
   section {
     height: 100vh;
-    border: 3px solid #800000;
+    /* border: 3px solid #800000; */
     text-align: center;
     max-width: 100%; 
     color: black;
