@@ -3,6 +3,8 @@
   import { fade } from 'svelte/transition';
   import Scroller from "@sveltejs/svelte-scroller";
   import ScoringLeadersChart from './ScoringLeadersChart.svelte';
+  import { tweened } from 'svelte/motion';
+  import { linear } from 'svelte/easing';
   import MapComp from './map.svelte';
   import * as d3 from 'd3';
 
@@ -10,7 +12,7 @@
   let width, height;
 
   let nbaData;
-  let selectedYear = 1960;
+  let selectedYear = 2004;
   let chartData = [];
 
   let sections = [
@@ -54,7 +56,8 @@
   }
 
   $: if (nbaData) {
-    updateChartData(selectedYear+10*index <=  2023 ? selectedYear+10*index : 2023);
+    let newYear = selectedYear + 5 * index;
+    updateChartData(newYear <= 2023 ? newYear : 2023);
   }
   // $: console.log(chartData);
 
@@ -92,17 +95,26 @@
   bind:offset
   bind:progress
 >
-  <div 
+  <!-- <div 
       class="background" 
       slot="background" 
       bind:clientWidth={width} 
       bind:clientHeight={height}
     >
-    <h1 style="text-align: center; padding: 10px"> {selectedYear+10*index <=  2023 ? selectedYear+10*index : 2023}</h1>
+    <h1 style="text-align: center; padding: 10px"> {selectedYear+5*index <=  2023 ? selectedYear+5*index : 2023}</h1>
     <ScoringLeadersChart chartData={chartData} index={index}/>
+  </div> -->
+
+  <div class="background" slot="background" bind:clientWidth={width} bind:clientHeight={height}>
+    <!-- Conditional rendering with fade transition for the chart -->
+    {#if chartData.length > 0}
+      <div in:fade={{ delay: 300, duration: 600 }} out:fade={{ duration: 600 }}>
+        <ScoringLeadersChart chartData={chartData} index={index}/>
+      </div>
+    {/if}
   </div>
 
-  <div class="foreground" slot="foreground">
+  <!-- <div class="foreground" slot="foreground">
     <section></section>
     <section></section>
     <section></section>
@@ -111,24 +123,24 @@
     <section></section>
     <section></section>
     <section></section>
-  </div>
+  </div> -->
 
   <!-- <div slot="background">
     <MapComp {index} />
   </div> -->
 
-  <!-- <div class="foreground" slot="foreground">
+  <div class="foreground" slot="foreground">
     {#each sections as section, i}
       <section>
-        <h1>{section.title}</h1>
         {#if i === index}
-          <p in:fade={{ delay: 300, duration: 600 }}>
-            {section.content}
-          </p>
+          <div in:fade={{ delay: 300, duration: 600 }} out:fade={{ duration: 600 }}>
+            <h1>{section.title}</h1>
+            <p id='left'>{section.content}</p>
+          </div>
         {/if}
       </section>
     {/each}
-  </div> -->
+  </div>
 </Scroller>
 
 <style>
@@ -156,5 +168,12 @@
     color: black;
     padding: 1em;
     margin: 0 0 2em 0;
+    border: maroon 3px;
+  }
+
+  #left{
+    text-align: center;
+    padding-left: 60%;
+    padding-top: 10%;
   }
 </style>
