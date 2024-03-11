@@ -3,8 +3,6 @@
   import { fade } from 'svelte/transition';
   import Scroller from "@sveltejs/svelte-scroller";
   import ScoringLeadersChart from './ScoringLeadersChart.svelte';
-  import { tweened } from 'svelte/motion';
-  import { linear } from 'svelte/easing';
   import MapComp from './map.svelte';
   import * as d3 from 'd3';
 
@@ -16,6 +14,10 @@
   let chartData = [];
 
   let sections = [
+    {
+      title: 'Origins: Growing up in Akron',
+      content: `LeBron Raymone James was born on December 30, 1984, in Akron, Ohio. His mother, Gloria James, raised him as a single parent. LeBron's childhood was marked by poverty and instability, but his natural talent and work ethic set him apart. He quickly rose through the ranks of youth basketball, earning national attention and acclaim.`
+    },
     {
       title: 'Prodigy to Phenom: The Foundation in Cleveland (2003 - 2010)',
       content: `LeBron James, the kid from Akron, Ohio, burst onto the professional basketball scene with the promise of greatness. His impact was immediate, earning the NBA Rookie of the Year award and an All-Star Game appearance in his debut season. His rare combination of size, skill, and intelligence reinvigorated the Cleveland Cavaliers. By his fourth season, he led the Cavs to their first NBA Finals appearance in franchise history. Though they fell short, LeBron had already begun etching his name into the annals of basketball lore.
@@ -89,53 +91,28 @@
 <Scroller
   top={0.0}
   bottom={1}
-  threshold={0.5}
+  threshold={1}
   bind:count
   bind:index
   bind:offset
   bind:progress
 >
-  <!-- <div 
-      class="background" 
-      slot="background" 
-      bind:clientWidth={width} 
-      bind:clientHeight={height}
-    >
-    <h1 style="text-align: center; padding: 10px"> {selectedYear+5*index <=  2023 ? selectedYear+5*index : 2023}</h1>
-    <ScoringLeadersChart chartData={chartData} index={index}/>
-  </div> -->
-
   <div class="background" slot="background" bind:clientWidth={width} bind:clientHeight={height}>
-    <!-- Conditional rendering with fade transition for the chart -->
-    {#if chartData.length > 0}
-      <div in:fade={{ delay: 300, duration: 600 }} out:fade={{ duration: 600 }}>
-        <ScoringLeadersChart chartData={chartData} index={index}/>
-      </div>
-    {/if}
-  </div>
-
-  <!-- <div class="foreground" slot="foreground">
-    <section></section>
-    <section></section>
-    <section></section>
-    <section></section>
-    <section></section>
-    <section></section>
-    <section></section>
-    <section></section>
-  </div> -->
-
-  <!-- <div slot="background">
-    <MapComp {index} />
-  </div> -->
-
-  <div class="foreground" slot="foreground">
+      <MapComp {index} />
+      {#if chartData.length > 0}
+        <div class="chart-container">
+          <ScoringLeadersChart {chartData} {index}/>
+        </div>
+      {/if}
+    </div>
+    
+    <div class="foreground" slot="foreground">
     {#each sections as section, i}
       <section>
         {#if i === index}
-          <div in:fade={{ delay: 300, duration: 600 }} out:fade={{ duration: 600 }}>
+          <div in:fade={{duration: 400 }} out:fade={{duration: 400 }}>
             <h1>{section.title}</h1>
-            <p id='left'>{section.content}</p>
+            <!-- <p id='left'>{section.content}</p> -->
           </div>
         {/if}
       </section>
@@ -144,15 +121,28 @@
 </Scroller>
 
 <style>
+  section {
+    font-family: 'Monaco', monospace;
+  }
   .background {
-    width: 100%;
-    height: 100vh;
     position: relative;
-    /* background-image: url(news.jpeg); */
-    background-color: #f5f5dc;
-    padding: 0;
   }
 
+  .map, .chart-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .map {
+    z-index: 1; /* Lower index, renders beneath the chart */
+  }
+
+  .chart-container {
+    z-index: 2; /* Higher index, renders above the map */
+  }
   .foreground {
     width: 100%;
     margin: 0 auto;
@@ -166,8 +156,8 @@
     text-align: center;
     max-width: 100%; 
     color: black;
-    padding: 1em;
-    margin: 0 0 2em 0;
+    padding: 2em;
+    margin: 0 0 0 0;
     border: maroon 3px;
   }
 
@@ -175,5 +165,14 @@
     text-align: center;
     padding-left: 60%;
     padding-top: 10%;
+  }
+
+  .background {
+    position: relative;
+  }
+  .background > div {
+    position: absolute;
+    top: 0;
+    left: 0;
   }
 </style>
