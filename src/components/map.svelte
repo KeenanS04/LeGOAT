@@ -2,6 +2,7 @@
   import mapboxgl from "mapbox-gl";
   import { onMount } from "svelte";
   export let index;
+  let actual_index;
 
   mapboxgl.accessToken =
     "pk.eyJ1IjoiYW11anJhbCIsImEiOiJjbHNqbW9rZzgycHhvMmtzYmp5eTJwNnJ5In0.OA2ad1hWPGAfF7QQOGURJQ";
@@ -13,14 +14,20 @@
   const locations = [
     {
       name: "Akron",
-      coords: [-81.519, 41.081],
-      description: "LeBron's Hometown",
-      color: "#000000",
+      coords: [-81.5241, 41.0814],
+      description: "Birthplace of LeBron James",
+      color: "#FFC627",
+    },
+    {
+      name: "Akron",
+      coords: [-81.5241, 41.0814],
+      description: "Birthplace of LeBron James",
+      color: "#FFC627",
     },
     {
       name: "Cleveland",
       coords: [-81.6944, 41.4993],
-      description: "First & Third NBA Team",
+      description: "First NBA Team",
       color: "#860038",
     },
     {
@@ -32,7 +39,7 @@
     {
       name: "Cleveland",
       coords: [-81.6944, 41.4993],
-      description: "First & Third NBA Team",
+      description: "Third NBA Team",
       color: "#860038",
     },
     {
@@ -83,7 +90,6 @@
 
     map.on("load", () => {
       hideLabelLayers();
-      drawJourneyLine();
     });
   });
 
@@ -92,12 +98,11 @@
   }
 
   function drawJourneyLine() {
-    if (index === 0) return; // No line to draw for the first index (Akron)
+    if (index <= 1 || index %2 === 1 || actual_index >= locations.length) return; // No line to draw for the first index (Akron)
 
-    const from = locations[index - 1].coords;
-    const to = locations[index].coords;
-    let color = locations[index].color; // Color of the destination team
-    console.log(color);
+    const from = locations[actual_index - 1].coords;
+    const to = locations[actual_index].coords;
+    let color = locations[actual_index].color; // Color of the destination team
 
     // Calculate intermediate point for the curve
     const midPointLat = (from[1] + to[1]) / 2;
@@ -107,7 +112,7 @@
     // This adjustment factor controls the curve's "strength" and direction
     const curveAdjustment = 2; // Adjust this value based on desired curvature
     const midPointLngAdjusted =
-      midPointLng + (index % 2 === 0 ? curveAdjustment : -curveAdjustment);
+      midPointLng + (actual_index % 2 === 0 ? curveAdjustment : -curveAdjustment);
 
     // Create more points for smoother curve
     const curvedCoordinates = [];
@@ -174,11 +179,15 @@
 
   let isVisible = true;
 
-  $: if (map && locations[index]) {
-    currentLocation = locations[index];
+  $: if (map && index) {
+    actual_index = Math.floor(index/2);
+    currentLocation = locations[actual_index];
+    console.log(index, locations[actual_index]);
     map.flyTo({ center: currentLocation.coords, zoom: zoomLevel });
-    drawJourneyLine();
-    drawPoint(currentLocation);
+    if (index % 2 == 0) {
+      drawJourneyLine();
+      drawPoint(currentLocation);
+    }
     // Optional: Add markers or other visual elements here
   }
 </script>

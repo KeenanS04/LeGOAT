@@ -15,6 +15,10 @@
 
   let sections = [
     {
+      title: 'LeGOAT: The LeBron James Story',
+      content: ''
+    },
+    {
       title: 'Origins: Growing up in Akron',
       content: `LeBron Raymone James was born on December 30, 1984, in Akron, Ohio. His mother, Gloria James, raised him as a single parent. LeBron's childhood was marked by poverty and instability, but his natural talent and work ethic set him apart. He quickly rose through the ranks of youth basketball, earning national attention and acclaim.`
     },
@@ -58,7 +62,7 @@
   }
 
   $: if (nbaData) {
-    let newYear = selectedYear + 5 * index;
+    let newYear = selectedYear + 5 * (Math.floor(index/2)-1);
     updateChartData(newYear <= 2023 ? newYear : 2023);
   }
   // $: console.log(chartData);
@@ -109,12 +113,15 @@
     <div class="foreground" slot="foreground">
     {#each sections as section, i}
       <section>
-        {#if i === index}
+        {#if i*2 === index}
           <div in:fade={{duration: 400 }} out:fade={{duration: 400 }}>
             <h1>{section.title}</h1>
-            <!-- <p id='left'>{section.content}</p> -->
+            <p id='left'>{section.content}</p>
           </div>
         {/if}
+      </section>
+      <section>
+        <h1>Transition</h1>
       </section>
     {/each}
   </div>
