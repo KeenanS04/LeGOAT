@@ -1,7 +1,9 @@
 <script>
+    import { flatGroup } from "d3";
   import mapboxgl from "mapbox-gl";
   import { onMount } from "svelte";
   export let index;
+  export let hidden;
   let actual_index;
 
   mapboxgl.accessToken =
@@ -47,7 +49,7 @@
       coords: [-118.2437, 34.0522],
       description: "Fourth NBA Team",
       color: "#FDB927",
-    },
+    }
   ];
 
   let currentLocation = locations[0]; // Default to Akron
@@ -63,42 +65,30 @@
   }
 
   onMount(() => {
-    updateZoomLevel();
-    map = new mapboxgl.Map({
-      container,
-      style: "mapbox://styles/mapbox/light-v11",
-      center: locations[0].coords,
-      zoom: zoomLevel,
-      attributionControl: true, // removes attribution from the bottom of the map
+      updateZoomLevel();
+      map = new mapboxgl.Map({
+        container,
+        style: "mapbox://styles/mapbox/light-v11",
+        center: locations[0].coords,
+        zoom: zoomLevel,
+        attributionControl: true, // removes attribution from the bottom of the map
+      });
+
+      window.addEventListener("resize", handleResize);
+
+      map.on("load", () => {
+        if (index && index % 2 == 0) {
+          drawPoint(currentLocation);
+        }
+      });
     });
-
-    window.addEventListener("resize", handleResize);
-
-    function hideLabelLayers() {
-      const labelLayerIds = map
-        .getStyle()
-        .layers.filter(
-          (layer) =>
-            layer.type === "symbol" && /label|text|place/.test(layer.id),
-        )
-        .map((layer) => layer.id);
-
-      for (const layerId of labelLayerIds) {
-        map.setLayoutProperty(layerId, "visibility", "none");
-      }
-    }
-
-    map.on("load", () => {
-      hideLabelLayers();
-    });
-  });
 
   function drawPoint(location) {
     new mapboxgl.Marker().setLngLat(location.coords).addTo(map);
   }
 
   function drawJourneyLine() {
-    if (index <= 1 || index %2 === 1 || actual_index >= locations.length) return; // No line to draw for the first index (Akron)
+    if (actual_index < 1 || actual_index >= locations.length) return; // No line to draw for the first index (Akron)
 
     const from = locations[actual_index - 1].coords;
     const to = locations[actual_index].coords;
@@ -179,16 +169,17 @@
 
   let isVisible = true;
 
-  $: if (map && index) {
+  $: if (index) { 
     actual_index = Math.floor(index/2);
+    console.log(map, actual_index);
+  }
+
+  $: if (map && map.isStyleLoaded() && actual_index) {
     currentLocation = locations[actual_index];
-    console.log(index, locations[actual_index]);
+    console.log("fly to", currentLocation);
     map.flyTo({ center: currentLocation.coords, zoom: zoomLevel });
-    if (index % 2 == 0) {
-      drawJourneyLine();
-      drawPoint(currentLocation);
-    }
-    // Optional: Add markers or other visual elements here
+    drawJourneyLine();
+    drawPoint(currentLocation);
   }
 </script>
 
@@ -199,23 +190,20 @@
   />
 </svelte:head>
 
-<div class="map" class:visible={isVisible} bind:this={container} />
+<div class="map" class:hidden={hidden} bind:this={container} />
 
 <style>
   .map {
     width: 100%;
     height: 100vh;
     position: absolute;
-    opacity: 0;
-    visibility: hidden;
-    transition:
-      opacity 2s,
-      visibility 2s;
+    opacity: 1;
     z-index: 0;
   }
 
-  .map.visible {
-    opacity: 1;
-    visibility: visible;
+  .hidden {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
   }
 </style>

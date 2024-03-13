@@ -1,3 +1,4 @@
+<!-- TODO: redraw chart only on transition to different team, change chart animation to move bars around and update instead of redrawing the entire chart -->
 <script>
   import { onMount } from 'svelte';
   import * as d3 from 'd3';
@@ -7,8 +8,8 @@
 
 
   const margin = { top: 100, right: 30, bottom: 70, left: 140 },
-          width = 800 - margin.left - margin.right,
-          height = 600 - margin.top - margin.bottom;
+    width = window.innerWidth / 2 - margin.left - margin.right,
+    height = window.innerHeight - margin.top - margin.bottom;
 
   // $: console.log(index);
   $: {
@@ -74,8 +75,8 @@
 
 <style>
   #bar-chart {
-    width: 500px;
-    height: 400px;
+    width: auto;
+    height: 100vh;
     z-index: 1;
   }
 </style>
