@@ -4,6 +4,7 @@
 
   export let chartData = [];
   export let index;
+  index = 0;
 
   let svg;
   let width, height;
@@ -26,10 +27,7 @@
     if (typeof window !== 'undefined') {
       updateDimensions();
       window.addEventListener('resize', updateDimensions);
-
-      if (index != 0) {
-        drawChart();
-      }
+      drawChart();
     }
   });
 
@@ -65,7 +63,7 @@
       .attr("y", -10) 
       .attr("text-anchor", "middle")
       .style("font-size", "18px")
-      .style("font-family", "Monaco")
+      .style("font-family", "Yantramanav")
       .text("All Time Scoring Chart");
 
     svg.append("g")

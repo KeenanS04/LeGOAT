@@ -7,6 +7,7 @@
   import * as d3 from 'd3';
 
   let count, index, offset, progress;
+  index = 0;
   let width, height;
 
 
@@ -15,12 +16,14 @@
   let chartData = [];
 
   let visualizations_hidden = true;
-
-  $: {if (index == 0) {
-    visualizations_hidden = true;
-  } else if (progress > 0.5) {
-    visualizations_hidden = false;
-  }}
+  $: console.log(index);
+  $: {
+    if (index === 0) {
+      visualizations_hidden = true;
+    } else if (offset > .6) {
+      visualizations_hidden = false;
+    }
+  }
 
 let sections = [
     {
@@ -140,16 +143,16 @@ let sections = [
   </div>
     
   <div class="foreground" slot="foreground">
-    <section>
+    <section class="hero">
       <h1>LeGOAT: The LeBron James Story</h1>
       <img src='src/images/lob.webp' alt='LeBron James' class="section-image"/>
     </section>
     {#each sections as section, i}
       <section>
         {#if i+1 === index}
-          <div class="content" in:fade={{duration: 900 }} out:fade={{duration: 400 }}>
+          <div class="content" in:fade={{duration: 400 }} out:fade={{duration: 900 }}>
             <h1>{section.title}</h1>
-            <p id='left'>{section.content}</p>
+            <p class='left'>{section.content}</p>
             {#if section.imageUrl}
               <img src={section.imageUrl} alt={section.title} class="section-image"/>
             {/if}
@@ -161,8 +164,9 @@ let sections = [
 </Scroller>
 
 <style>
+  @import 'https://fonts.googleapis.com/css?family=Shrikhand|Yantramanav';
   section {
-    font-family: 'Monaco', monospace;
+    font-family: 'Yantramanav', sans-serif;
   }
 
   .foreground {
@@ -183,6 +187,16 @@ let sections = [
     margin: 0 0 0 0;
   }
 
+  .hero h1 {
+    font-size: 3em;
+  }
+
+  .hero img {
+    max-width: 100%; 
+    max-height: 60vh; 
+    object-fit: contain;
+  }
+
   .content {
     height: 100vh;
     width: 45vw;
@@ -191,10 +205,17 @@ let sections = [
     left: 53%;
   }
 
-  #left{
-    text-align: center;
+  .content h1 {
+    font-size: 2em;
     margin-top: 20px;
   }
+
+  .left{
+    text-align: center;
+    font-size: 20px;
+    margin-top: 20px;
+  }
+
   .section-image{
     max-width: 100%; 
     max-height: 40vh; 
