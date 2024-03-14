@@ -29,14 +29,14 @@ let sections = [
     {
       title: 'Origins: Growing up in Akron',
       content: `LeBron Raymone James was born on December 30, 1984, in Akron, Ohio. His mother, Gloria James, raised him as a single parent. LeBron's childhood was marked by poverty and instability, but his natural talent and work ethic set him apart. He quickly rose through the ranks of youth basketball, earning national attention and acclaim.`,
-      imageUrl: 'images/chosen_one.ong.jpeg'
+      imageUrl: 'images/chosen_one.ong.webp'
     },
     {
       title: 'Prodigy to Phenom: The Foundation in Cleveland (2003 - 2010)',
       content: `LeBron James, the kid from Akron, Ohio, burst onto the professional basketball scene with the promise of greatness. His impact was immediate, earning the NBA Rookie of the Year award and an All-Star Game appearance in his debut season. His rare combination of size, skill, and intelligence reinvigorated the Cleveland Cavaliers. By his fourth season, he led the Cavs to their first NBA Finals appearance in franchise history. Though they fell short, LeBron had already begun etching his name into the annals of basketball lore.
 
       In Cleveland, LeBron's individual accolades piled up swiftly. He was a six-time All-Star, a two-time All-Star Game MVP, and secured two regular-season MVPs. He led the league in scoring in 2008 and was perennially named to the All-NBA First Team and the NBA All-Defensive First Team, showcasing his two-way prowess. However, the championship glory that Cleveland so desperately craved remained just out of reach.`,
-      imageUrl: 'images/youngbron.jpg'
+      imageUrl: 'images/youngbron.webp'
     },
     // {
     //   title: 'He is Special',
@@ -50,7 +50,7 @@ let sections = [
       content: `The Decision to join the Miami Heat changed the NBA's balance of power and LeBron's career trajectory. In Miami, LeBron refined his game, becoming more efficient and deadly, particularly from beyond the arc. He garnered two more MVP awards and led the Heat to four straight NBA Finals, winning two. His playoff performances during this period were nothing short of legendary, including a 45-point effort against the Boston Celtics to stave off elimination in 2012 and a 37-point closing masterpiece in Game 7 of the 2013 Finals.
 
       Off the court, LeBron's influence grew. He was not only a fixture at All-Star weekends but also a global ambassador for the sport, representing Team USA. He captured two Olympic medals during this period – gold in Beijing (2008) and London (2012), further cementing his status as basketball royalty.`,
-      imageUrl: 'images/miami.png'
+      imageUrl: 'images/miami.webp'
     },
     // {
     //   title: 'Dominance in Miami',
@@ -77,7 +77,7 @@ let sections = [
       In 2022, at the age of 37, LeBron achieved a historic milestone by becoming the all-time leading scorer in NBA Playoffs history, surpassing Michael Jordan. On February 7, 2023, LeBron James made history by surpassing Kareem Abdul-Jabbar to become the NBA's all-time leading scorer, using his signature fadeaway jumper to seal the record. As of February 29, 2024, he is just 40 points away from reaching the unprecedented milestone of 40,000 career points, poised to set yet another record in his illustrious career.
       
       Off the hardwood, LeBron's impact has been felt in education through his "I PROMISE School," philanthropy, and activism, particularly in his staunch advocacy for racial justice and voter rights. His media company, SpringHill Entertainment, produced the movie "Space Jam: A New Legacy," where he starred as the lead, blending his athletic and artistic pursuits.`,
-      imageUrl: 'images/lakerBron.jpg'
+      imageUrl: 'images/lakerBron.webp'
     },
   ];
 
@@ -148,7 +148,7 @@ let sections = [
       <img src='images/lob.webp' alt='LeBron James' class="section-image"/>
     </section>
     {#each sections as section, i}
-      <section>
+      <section class="scrollable-section">
         {#if i+1 === index}
           <div class="content" in:fade={{duration: 400 }} out:fade={{duration: 900 }}>
             <h1>{section.title}</h1>
@@ -167,6 +167,18 @@ let sections = [
   @import 'https://fonts.googleapis.com/css?family=Shrikhand|Yantramanav';
   section {
     font-family: 'Yantramanav', sans-serif;
+    height: 100vh;
+    border: maroon 3px solid;
+    text-align: center;
+    max-width: 100%; 
+    color: black;
+    padding: 2em;
+    margin: 0 0 0 0;
+  }
+
+  .scrollable-section {
+    position: sticky;
+    top: 0;
   }
 
   .foreground {
@@ -175,16 +187,6 @@ let sections = [
     height: auto;
     position: relative;
     /* background-color: rgb(235, 229, 221); */
-  }
-
-  section {
-    height: 100vh;
-    border: maroon 3px solid;
-    text-align: center;
-    max-width: 100%; 
-    color: black;
-    padding: 2em;
-    margin: 0 0 0 0;
   }
 
   .hero h1 {
