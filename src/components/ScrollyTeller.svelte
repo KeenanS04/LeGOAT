@@ -83,7 +83,7 @@ let sections = [
   }
 
   $: if (nbaData) {
-    let newYear = selectedYear + 5 * (Math.floor(index/2)-1);
+    let newYear = selectedYear + 5 * (index-1);
     updateChartData(newYear <= 2023 ? newYear : 2023);
   }
   // $: console.log(chartData);
