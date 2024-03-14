@@ -3,8 +3,6 @@
   import mapboxgl from "mapbox-gl";
   import { onMount } from "svelte";
   export let index;
-  export let hidden;
-  let actual_index;
 
   mapboxgl.accessToken =
     "pk.eyJ1IjoiYW11anJhbCIsImEiOiJjbHNqbW9rZzgycHhvMmtzYmp5eTJwNnJ5In0.OA2ad1hWPGAfF7QQOGURJQ";
@@ -88,11 +86,11 @@
   }
 
   function drawJourneyLine() {
-    if (actual_index < 1 || actual_index >= locations.length) return; // No line to draw for the first index (Akron)
+    if (index < 1 || index >= locations.length) return; // No line to draw for the first index (Akron)
 
-    const from = locations[actual_index - 1].coords;
-    const to = locations[actual_index].coords;
-    let color = locations[actual_index].color; // Color of the destination team
+    const from = locations[index - 1].coords;
+    const to = locations[index].coords;
+    let color = locations[index].color; // Color of the destination team
 
     // Calculate intermediate point for the curve
     const midPointLat = (from[1] + to[1]) / 2;
@@ -102,7 +100,7 @@
     // This adjustment factor controls the curve's "strength" and direction
     const curveAdjustment = 2; // Adjust this value based on desired curvature
     const midPointLngAdjusted =
-      midPointLng + (actual_index % 2 === 0 ? curveAdjustment : -curveAdjustment);
+      midPointLng + (index % 2 === 0 ? curveAdjustment : -curveAdjustment);
 
     // Create more points for smoother curve
     const curvedCoordinates = [];
@@ -167,15 +165,9 @@
     animateLine();
   }
 
-  let isVisible = true;
 
-  $: if (index) { 
-    actual_index = Math.floor(index/2);
-    console.log(map, actual_index);
-  }
-
-  $: if (map && map.isStyleLoaded() && actual_index) {
-    currentLocation = locations[actual_index];
+  $: if (map && map.isStyleLoaded() && index) {
+    currentLocation = locations[index];
     console.log("fly to", currentLocation);
     map.flyTo({ center: currentLocation.coords, zoom: zoomLevel });
     drawJourneyLine();
@@ -190,20 +182,14 @@
   />
 </svelte:head>
 
-<div class="map" class:hidden={hidden} bind:this={container} />
+<div class="map" bind:this={container} />
 
 <style>
   .map {
     width: 100%;
-    height: 100vh;
+    height: 100%;
     position: absolute;
     opacity: 1;
     z-index: 0;
-  }
-
-  .hidden {
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
   }
 </style>

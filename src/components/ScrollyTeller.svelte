@@ -114,12 +114,6 @@ let sections = [
   // currentSection = sections[currentIndex] || sections[0];
   // $: console.log("Current index:", index);
 
-  let mapHidden = false;
-  let chartVisible = false;
-
-  $: mapHidden = ![2, 4, 6, 8, 10].includes(index);
-  $: chartVisible = [1, 3, 5, 7, 9].includes(index);
-
   onMount(() => {
     loadData();
   });
@@ -136,21 +130,18 @@ let sections = [
   bind:progress
 >
   <div class="background" slot="background" bind:clientWidth={width} bind:clientHeight={height}>
-    <MapComp {index} hidden={mapHidden}/>
-    {#if chartVisible}
-      <div class="chart-container" in:fade={{ duration: 400 }} out:fade={{ duration: 400 }}>
-        <ScoringLeadersChart {chartData} {index}/>
-      </div>
-    {/if}
+    <div>
+      <MapComp {index}/>
+    </div>
+    <div class="chart-container" in:fade={{ duration: 400 }} out:fade={{ duration: 400 }}>
+      <ScoringLeadersChart {chartData} {index}/>
+    </div>
   </div>
     
   <div class="foreground" slot="foreground">
     {#each sections as section, i}
       <section>
-        <h1>LeBron's Team to Team Jounrey</h1>
-      </section>
-      <section>
-        {#if i*2+1 === index}
+        {#if i === index}
           <div in:fade={{duration: 700 }} out:fade={{duration: 400 }}>
             <h1>{section.title}</h1>
             <p id='left'>{section.content}</p>
@@ -172,7 +163,7 @@ let sections = [
     position: relative;
   }
 
-  .map, .chart-container {
+  .chart-container {
     position: absolute;
     top: 0;
     left: 0;
@@ -180,13 +171,6 @@ let sections = [
     height: 100%;
   }
 
-  .map {
-    z-index: 1; /* Lower index, renders beneath the chart */
-  }
-
-  .chart-container {
-    z-index: 2; /* Higher index, renders above the map */
-  }
   .foreground {
     width: 100%;
     margin: 0 auto;
