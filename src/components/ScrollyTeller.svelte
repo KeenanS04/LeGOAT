@@ -97,7 +97,7 @@ let sections = [
 
     scores.sort((a, b) => b.score - a.score);
 
-    let topScorers = scores.slice(0, 10);
+    let topScorers = scores.slice(0, 15);
 
     if (!topScorers.some(d => d.player.includes('#23 LeBron James'))) {
       const leBron = scores.find(d => d.player.includes('#23 LeBron James'));
@@ -142,7 +142,7 @@ let sections = [
     {#each sections as section, i}
       <section>
         {#if i === index}
-          <div in:fade={{duration: 700 }} out:fade={{duration: 400 }}>
+          <div in:fade={{duration: 900 }} out:fade={{duration: 400 }}>
             <h1>{section.title}</h1>
             <p id='left'>{section.content}</p>
             {#if section.imageUrl}
