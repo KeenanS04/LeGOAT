@@ -29,14 +29,14 @@ let sections = [
     {
       title: 'Origins: Growing up in Akron',
       content: `LeBron Raymone James was born on December 30, 1984, in Akron, Ohio. His mother, Gloria James, raised him as a single parent. LeBron's childhood was marked by poverty and instability, but his natural talent and work ethic set him apart. He quickly rose through the ranks of youth basketball, earning national attention and acclaim.`,
-      imageUrl: 'src/images/chosen_one.ong.jpeg'
+      imageUrl: 'images/chosen_one.ong.jpeg'
     },
     {
       title: 'Prodigy to Phenom: The Foundation in Cleveland (2003 - 2010)',
       content: `LeBron James, the kid from Akron, Ohio, burst onto the professional basketball scene with the promise of greatness. His impact was immediate, earning the NBA Rookie of the Year award and an All-Star Game appearance in his debut season. His rare combination of size, skill, and intelligence reinvigorated the Cleveland Cavaliers. By his fourth season, he led the Cavs to their first NBA Finals appearance in franchise history. Though they fell short, LeBron had already begun etching his name into the annals of basketball lore.
 
       In Cleveland, LeBron's individual accolades piled up swiftly. He was a six-time All-Star, a two-time All-Star Game MVP, and secured two regular-season MVPs. He led the league in scoring in 2008 and was perennially named to the All-NBA First Team and the NBA All-Defensive First Team, showcasing his two-way prowess. However, the championship glory that Cleveland so desperately craved remained just out of reach.`,
-      imageUrl: 'src/images/youngbron.jpg'
+      imageUrl: 'images/youngbron.jpg'
     },
     // {
     //   title: 'He is Special',
@@ -50,7 +50,7 @@ let sections = [
       content: `The Decision to join the Miami Heat changed the NBA's balance of power and LeBron's career trajectory. In Miami, LeBron refined his game, becoming more efficient and deadly, particularly from beyond the arc. He garnered two more MVP awards and led the Heat to four straight NBA Finals, winning two. His playoff performances during this period were nothing short of legendary, including a 45-point effort against the Boston Celtics to stave off elimination in 2012 and a 37-point closing masterpiece in Game 7 of the 2013 Finals.
 
       Off the court, LeBron's influence grew. He was not only a fixture at All-Star weekends but also a global ambassador for the sport, representing Team USA. He captured two Olympic medals during this period – gold in Beijing (2008) and London (2012), further cementing his status as basketball royalty.`,
-      imageUrl: 'src/images/miami.png'
+      imageUrl: 'images/miami.png'
     },
     // {
     //   title: 'Dominance in Miami',
@@ -63,7 +63,7 @@ let sections = [
       content: `LeBron's return to Cleveland was about redemption and delivering on a long-held promise. He led the Cavaliers to four consecutive NBA Finals, including the miraculous 2016 championship win that not only shattered Cleveland's curse but also solidified his clutch legacy. In these years, he continued to stack up All-NBA First Team selections and All-Star appearances, consistently dazzling fans with his high basketball IQ and versatility.
 
       LeBron's 2018 playoff run was one for the ages, often single-handedly carrying the Cavs through each round, including a buzzer-beater against the Indiana Pacers that added to his highlight reel of iconic moments.`,
-      imageUrl: 'src/images/cavs.webp'
+      imageUrl: 'images/cavs.webp'
     },
     // {
     //   title: 'This one is for you Cleveland',
@@ -77,7 +77,7 @@ let sections = [
       In 2022, at the age of 37, LeBron achieved a historic milestone by becoming the all-time leading scorer in NBA Playoffs history, surpassing Michael Jordan. On February 7, 2023, LeBron James made history by surpassing Kareem Abdul-Jabbar to become the NBA's all-time leading scorer, using his signature fadeaway jumper to seal the record. As of February 29, 2024, he is just 40 points away from reaching the unprecedented milestone of 40,000 career points, poised to set yet another record in his illustrious career.
       
       Off the hardwood, LeBron's impact has been felt in education through his "I PROMISE School," philanthropy, and activism, particularly in his staunch advocacy for racial justice and voter rights. His media company, SpringHill Entertainment, produced the movie "Space Jam: A New Legacy," where he starred as the lead, blending his athletic and artistic pursuits.`,
-      imageUrl: 'src/images/lakerBron.jpg'
+      imageUrl: 'images/lakerBron.jpg'
     },
   ];
 
@@ -145,7 +145,7 @@ let sections = [
   <div class="foreground" slot="foreground">
     <section class="hero">
       <h1>LeGOAT: The LeBron James Story</h1>
-      <img src='src/images/lob.webp' alt='LeBron James' class="section-image"/>
+      <img src='images/lob.webp' alt='LeBron James' class="section-image"/>
     </section>
     {#each sections as section, i}
       <section>
