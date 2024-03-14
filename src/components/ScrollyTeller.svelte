@@ -23,7 +23,7 @@ let sections = [
     {
       title: 'Origins: Growing up in Akron',
       content: `LeBron Raymone James was born on December 30, 1984, in Akron, Ohio. His mother, Gloria James, raised him as a single parent. LeBron's childhood was marked by poverty and instability, but his natural talent and work ethic set him apart. He quickly rose through the ranks of youth basketball, earning national attention and acclaim.`,
-      imageUrl: 'src/images/hsBron.jpeg'
+      imageUrl: 'src/images/chosen_one.ong.jpeg'
     },
     {
       title: 'Prodigy to Phenom: The Foundation in Cleveland (2003 - 2010)',
@@ -48,8 +48,8 @@ let sections = [
     },
     // {
     //   title: 'Dominance in Miami',
-    //   content: `LeBron's first season with the Heat culminates in a Finals appearance against the Dallas Mavericks. However, the Heat lose in six games, a series that serves as a crucial learning experience for LeBron and motivates his evolution as a player. LeBron wins the NBA MVP award in 2012 and 2013, solidifying his status as the league's top player during the Heat's championship era. LeBron leads Miami to NBA championships in 2012 and 2013, overcoming the Oklahoma City Thunder and the San Antonio Spurs. These victories mark the fulfillment of his championship aspirations and contribute to his growing legacy. Additionally, In March 2014, against the Charlotte Bobcats, LeBron scored a career-high 61 points. This unforgettable performance showcased his scoring versatility, marking a high point in his Miami Heat tenure. Securing another gold medal with Team USA in 2012, LeBron further cemented his legacy as a basketball icon. His contributions were key in maintaining Team USA's dominance in international basketball.,
-    //   `
+    //   content: `LeBron's first season with the Heat culminates in a Finals appearance against the Dallas Mavericks. However, the Heat lose in six games, a series that serves as a crucial learning experience for LeBron and motivates his evolution as a player. LeBron wins the NBA MVP award in 2012 and 2013, solidifying his status as the league's top player during the Heat's championship era. LeBron leads Miami to NBA championships in 2012 and 2013, overcoming the Oklahoma City Thunder and the San Antonio Spurs. These victories mark the fulfillment of his championship aspirations and contribute to his growing legacy. Additionally, In March 2014, against the Charlotte Bobcats, LeBron scored a career-high 61 points. This unforgettable performance showcased his scoring versatility, marking a high point in his Miami Heat tenure. Securing another gold medal with Team USA in 2012, LeBron further cemented his legacy as a basketball icon. His contributions were key in maintaining Team USA's dominance in international basketball.
+    //   `,
     //   imageUrl: '/path/to/image1.jpg'
     // },
     {
