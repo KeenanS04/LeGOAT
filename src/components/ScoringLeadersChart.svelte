@@ -7,7 +7,7 @@
   export let index;
 
 
-  const margin = { top: 100, right: 30, bottom: 70, left: 140 },
+  const margin = { top: 150, right: 30, bottom: 70, left: 140 },
     width = window.innerWidth / 2 - margin.left - margin.right,
     height = window.innerHeight - margin.top - margin.bottom;
 
@@ -33,6 +33,14 @@
         .attr("height", height + margin.top + margin.bottom)
       .append("g")
         .attr("transform", `translate(${margin.left},${margin.top})`);
+    
+    svg.append("text")
+      .attr("x", width / 2) 
+      .attr("y", 0 - (margin.top / 7))
+      .attr("text-anchor", "middle")
+      .style("font-size", "24px")
+      .style("font-family", "Monaco")
+      .text("All Time Scoring Chart");
 
     // X axis
     const x = d3.scaleLinear()
@@ -51,23 +59,34 @@
       .call(d3.axisLeft(y));
 
     // Bars - Bind each rect to the player name to track their movement
-    const bars = svg.selectAll("rect")
-      .data(chartData, d => d.player);
+    // const bars = svg.selectAll("rect")
+    //   .data(chartData, d => d.player);
 
-    bars.enter()
+    // bars.enter()
+    //   .append("rect")
+    //     .attr("fill", d => d.player.includes('LeBron James') ? 'red' : 'steelblue')
+    //     .attr("x", x(0))
+    //     .attr("height", y.bandwidth())
+    //   // Initial y position based on the player's score
+    //   .attr("y", d => y(d.player))
+    //   .merge(bars) // Merge enter and update selections
+    //     .transition() // Start a transition to animate the bars
+    //     .duration(750)
+    //     .attr("y", d => y(d.player)) // New y position based on updated ranks
+    //     .attr("width", d => x(d.score)); // Update width based on new score
+
+    // bars.exit().remove(); // Remove bars for players no longer in the data
+    svg.selectAll("rect")
+      .data(chartData, d => d.player)
+      .enter()
       .append("rect")
-        .attr("fill", d => d.player.includes('LeBron James') ? 'red' : 'steelblue')
+        .attr("fill", d => d.player.includes('LeBron James') ? '#f76c6c' : '#a0c4ff') // Soft color scheme
         .attr("x", x(0))
+        .attr("y", d => y(d.player))
         .attr("height", y.bandwidth())
-      // Initial y position based on the player's score
-      .attr("y", d => y(d.player))
-      .merge(bars) // Merge enter and update selections
-        .transition() // Start a transition to animate the bars
-        .duration(750)
-        .attr("y", d => y(d.player)) // New y position based on updated ranks
-        .attr("width", d => x(d.score)); // Update width based on new score
-
-    bars.exit().remove(); // Remove bars for players no longer in the data
+        .attr("width", d => x(d.score))
+        .attr("rx", 5) // Rounded corners
+        .attr("ry", 5); // Rounded corners
   }
 </script>
 
