@@ -1,30 +1,54 @@
 <script>
-  import { onMount } from 'svelte';
+  import { onMount, onDestroy } from 'svelte';
   import * as d3 from 'd3';
 
   export let chartData = [];
   export let index;
 
   let svg;
-  const margin = { top: 170, right: 20, bottom: 0, left: 140 };
   let width, height;
+  let margin;
 
   let x = d3.scaleLinear();
   let y = d3.scaleBand().padding(0.2);
 
   onMount(() => {
+    margin = { 
+      top: window.innerHeight/20, 
+      right: window.innerWidth/50, 
+      bottom: window.innerHeight/20, 
+      left: window.innerWidth/10 };
     width = window.innerWidth / 2 - margin.left - margin.right;
     height = window.innerHeight / 2 - margin.top - margin.bottom;
 
     x.range([0, width]);
     y.range([0, height]); 
+    if (typeof window !== 'undefined') {
+      updateDimensions();
+      window.addEventListener('resize', updateDimensions);
 
-    if (index != 0) {
-      drawChart();
+      if (index != 0) {
+        drawChart();
+      }
     }
   });
 
-  $: if (chartData.length > 0 && index != 0) {
+  onDestroy(() => {
+    if (typeof window !== 'undefined') {
+      window.removeEventListener('resize', updateDimensions);
+    }
+  });
+
+  function updateDimensions() {
+    if (typeof window === 'undefined') return;
+    if (svg) {
+      svg.attr("width", width + margin.left + margin.right)
+         .attr("height", height + margin.top + margin.bottom);
+      updateChart();
+    }
+  }
+
+  $: if (chartData.length > 0 && index != 0 && typeof window !== 'undefined') {
     updateChart();
   }
 
@@ -53,6 +77,7 @@
   }
 
   function updateChart() {
+    if (!svg) return;
     chartData.sort((a, b) => b.score - a.score);
 
     x.domain([0, d3.max(chartData, d => d.score)]);
@@ -86,8 +111,10 @@
 
 <style>
   #bar-chart {
-    width: auto;
-    height: 100vh;
-    z-index: 1;
+    width: 50vw;
+    height: 50vh;
+    position: absolute;
+    top: 30px;
+    left: 0;
   }
 </style>

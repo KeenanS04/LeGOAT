@@ -1,5 +1,4 @@
 <script>
-    import { flatGroup } from "d3";
   import mapboxgl from "mapbox-gl";
   import { onMount } from "svelte";
   export let index;
@@ -53,7 +52,7 @@
   let currentLocation = locations[0]; // Default to Akron
 
   function updateZoomLevel() {
-    const screenWidth = window.innerWidth;
+    const screenWidth = window.innerWidth/2;
     zoomLevel = screenWidth <= 600 ? 4 : 5.85; // Adjust these values as needed
   }
 
@@ -86,7 +85,7 @@
   }
 
   function drawJourneyLine() {
-    if (index < 1 || index >= locations.length) return; // No line to draw for the first index (Akron)
+    if (index <= 1 || index >= locations.length) return; // No line to draw for the first index (Akron)
 
     const from = locations[index - 1].coords;
     const to = locations[index].coords;
@@ -165,7 +164,6 @@
     animateLine();
   }
 
-
   $: if (map && map.isStyleLoaded() && index) {
     currentLocation = locations[index];
     console.log("fly to", currentLocation);
@@ -183,13 +181,12 @@
 </svelte:head>
 
 <div class="map" bind:this={container} />
-
+<!-- TODO: add map background, wrap map div in other div for map-container -->
 <style>
   .map {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    opacity: 1;
-    z-index: 0;
+    width: 50vw; /* width of the map is 50% of the viewport width */
+    height: 40vh; /* height of the map is 50% of the viewport height */
+    position: absolute; /* absolute positioning allows the map to be positioned relative to the nearest positioned ancestor */
+    transform: translate(3%, 140%); /* shift the map up and to the left by half its height and width, effectively centering it */
   }
 </style>

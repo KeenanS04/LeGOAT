@@ -14,12 +14,15 @@
   let selectedYear = 2004;
   let chartData = [];
 
+  let visualizations_hidden = true;
+
+  $: {if (index == 0) {
+    visualizations_hidden = true;
+  } else if (progress > 0.5) {
+    visualizations_hidden = false;
+  }}
+
 let sections = [
-    {
-      title: 'LeGOAT: The LeBron James Story',
-      content: '',
-      imageUrl: 'src/images/lob.webp'
-    },
     {
       title: 'Origins: Growing up in Akron',
       content: `LeBron Raymone James was born on December 30, 1984, in Akron, Ohio. His mother, Gloria James, raised him as a single parent. LeBron's childhood was marked by poverty and instability, but his natural talent and work ethic set him apart. He quickly rose through the ranks of youth basketball, earning national attention and acclaim.`,
@@ -130,19 +133,21 @@ let sections = [
   bind:progress
 >
   <div class="background" slot="background" bind:clientWidth={width} bind:clientHeight={height}>
-    <div>
+    <div style="transition: opacity 0.5s; opacity: {visualizations_hidden ? 0 : 1}">
       <MapComp {index}/>
-    </div>
-    <div class="chart-container" in:fade={{ duration: 400 }} out:fade={{ duration: 400 }}>
       <ScoringLeadersChart {chartData} {index}/>
     </div>
   </div>
     
   <div class="foreground" slot="foreground">
+    <section>
+      <h1>LeGOAT: The LeBron James Story</h1>
+      <img src='src/images/lob.webp' alt='LeBron James' class="section-image"/>
+    </section>
     {#each sections as section, i}
       <section>
-        {#if i === index}
-          <div in:fade={{duration: 900 }} out:fade={{duration: 400 }}>
+        {#if i+1 === index}
+          <div class="content" in:fade={{duration: 900 }} out:fade={{duration: 400 }}>
             <h1>{section.title}</h1>
             <p id='left'>{section.content}</p>
             {#if section.imageUrl}
@@ -158,17 +163,6 @@ let sections = [
 <style>
   section {
     font-family: 'Monaco', monospace;
-  }
-  .background {
-    position: relative;
-  }
-
-  .chart-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
   }
 
   .foreground {
@@ -189,25 +183,22 @@ let sections = [
     margin: 0 0 0 0;
   }
 
+  .content {
+    height: 100vh;
+    width: 45vw;
+    border: cyan 3px solid;
+    position: absolute;
+    left: 53%;
+  }
+
   #left{
     text-align: center;
-    padding-left: 50%;
     margin-top: 20px;
   }
   .section-image{
     max-width: 100%; 
     max-height: 40vh; 
     object-fit: contain;
-    padding-left: 50%;
     margin-top: 20px;
-  }
-
-  .background {
-    position: relative;
-  }
-  .background > div {
-    position: absolute;
-    top: 0;
-    left: 0;
   }
 </style>
