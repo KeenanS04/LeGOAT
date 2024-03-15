@@ -4,6 +4,7 @@
   import Scroller from "@sveltejs/svelte-scroller";
   import ScoringLeadersChart from './ScoringLeadersChart.svelte';
   import MapComp from './map.svelte';
+  import MapOvr from './map_ovr.svelte';
   import * as d3 from 'd3';
 
   let count, index, offset, progress;
@@ -29,14 +30,16 @@ let sections = [
     {
       title: 'Origins: Growing up in Akron',
       content: `LeBron Raymone James was born on December 30, 1984, in Akron, Ohio. His mother, Gloria James, raised him as a single parent. LeBron's childhood was marked by poverty and instability, but his natural talent and work ethic set him apart. He quickly rose through the ranks of youth basketball, earning national attention and acclaim.`,
-      imageUrl: 'images/chosen_one.ong.webp'
+      imageUrl: 'images/chosen_one.ong.webp',
+      imageClass: 'origins-image'
     },
     {
       title: 'Prodigy to Phenom: The Foundation in Cleveland (2003 - 2010)',
       content: `LeBron James, the kid from Akron, Ohio, burst onto the professional basketball scene with the promise of greatness. His impact was immediate, earning the NBA Rookie of the Year award and an All-Star Game appearance in his debut season. His rare combination of size, skill, and intelligence reinvigorated the Cleveland Cavaliers. By his fourth season, he led the Cavs to their first NBA Finals appearance in franchise history. Though they fell short, LeBron had already begun etching his name into the annals of basketball lore.
 
       In Cleveland, LeBron's individual accolades piled up swiftly. He was a six-time All-Star, a two-time All-Star Game MVP, and secured two regular-season MVPs. He led the league in scoring in 2008 and was perennially named to the All-NBA First Team and the NBA All-Defensive First Team, showcasing his two-way prowess. However, the championship glory that Cleveland so desperately craved remained just out of reach.`,
-      imageUrl: 'images/youngbron.webp'
+      imageUrl: 'images/youngbron.webp',
+      imageClass: 'draft-image'
     },
     // {
     //   title: 'He is Special',
@@ -50,7 +53,8 @@ let sections = [
       content: `The Decision to join the Miami Heat changed the NBA's balance of power and LeBron's career trajectory. In Miami, LeBron refined his game, becoming more efficient and deadly, particularly from beyond the arc. He garnered two more MVP awards and led the Heat to four straight NBA Finals, winning two. His playoff performances during this period were nothing short of legendary, including a 45-point effort against the Boston Celtics to stave off elimination in 2012 and a 37-point closing masterpiece in Game 7 of the 2013 Finals.
 
       Off the court, LeBron's influence grew. He was not only a fixture at All-Star weekends but also a global ambassador for the sport, representing Team USA. He captured two Olympic medals during this period – gold in Beijing (2008) and London (2012), further cementing his status as basketball royalty.`,
-      imageUrl: 'images/miami.webp'
+      imageUrl: 'images/miami.webp',
+      imageClass: 'heat-image'
     },
     // {
     //   title: 'Dominance in Miami',
@@ -63,7 +67,8 @@ let sections = [
       content: `LeBron's return to Cleveland was about redemption and delivering on a long-held promise. He led the Cavaliers to four consecutive NBA Finals, including the miraculous 2016 championship win that not only shattered Cleveland's curse but also solidified his clutch legacy. In these years, he continued to stack up All-NBA First Team selections and All-Star appearances, consistently dazzling fans with his high basketball IQ and versatility.
 
       LeBron's 2018 playoff run was one for the ages, often single-handedly carrying the Cavs through each round, including a buzzer-beater against the Indiana Pacers that added to his highlight reel of iconic moments.`,
-      imageUrl: 'images/cavs.webp'
+      imageUrl: 'images/cavs.webp',
+      imageClass: 'cavaliers-image'
     },
     // {
     //   title: 'This one is for you Cleveland',
@@ -77,7 +82,8 @@ let sections = [
       In 2022, at the age of 37, LeBron achieved a historic milestone by becoming the all-time leading scorer in NBA Playoffs history, surpassing Michael Jordan. On February 7, 2023, LeBron James made history by surpassing Kareem Abdul-Jabbar to become the NBA's all-time leading scorer, using his signature fadeaway jumper to seal the record. As of February 29, 2024, he is just 40 points away from reaching the unprecedented milestone of 40,000 career points, poised to set yet another record in his illustrious career.
       
       Off the hardwood, LeBron's impact has been felt in education through his "I PROMISE School," philanthropy, and activism, particularly in his staunch advocacy for racial justice and voter rights. His media company, SpringHill Entertainment, produced the movie "Space Jam: A New Legacy," where he starred as the lead, blending his athletic and artistic pursuits.`,
-      imageUrl: 'images/lakerBron.webp'
+      imageUrl: 'images/lakerBron.webp',
+      imageClass: 'la-image'
     },
   ];
 
@@ -120,6 +126,10 @@ let sections = [
   // currentSection = sections[currentIndex] || sections[0];
   // $: console.log("Current index:", index);
 
+  let showMapAndChart = true;
+
+  $: showMapAndChart = index <= sections.length;
+
   onMount(() => {
     loadData();
   });
@@ -137,8 +147,10 @@ let sections = [
 >
   <div class="background" slot="background" bind:clientWidth={width} bind:clientHeight={height}>
     <div style="transition: opacity 0.5s; opacity: {visualizations_hidden ? 0 : 1}">
-      <MapComp {index}/>
-      <ScoringLeadersChart {chartData} {index}/>
+      {#if showMapAndChart}
+        <MapComp {index}/>
+        <ScoringLeadersChart {chartData} {index}/>
+      {/if}
     </div>
   </div>
     
@@ -153,13 +165,20 @@ let sections = [
           <div class="content" in:fade={{duration: 400 }} out:fade={{duration: 900 }}>
             <h1>{section.title}</h1>
             <p class='left'>{section.content}</p>
-            {#if section.imageUrl}
-              <img src={section.imageUrl} alt={section.title} class="section-image"/>
-            {/if}
+            <div>
+              {#if section.imageUrl}
+                <img src={section.imageUrl} alt={section.title} class="section-image {section.imageClass}"/>
+              {/if}
+            </div>
           </div>
         {/if}
       </section>
     {/each}
+    <section class="map-accolades">
+      <h1>Map</h1>
+      <MapOvr/>
+      <!-- <img src='images/lob.webp' alt='LeBron James' class="section-image"/> -->
+    </section>
   </div>
 </Scroller>
 
@@ -200,9 +219,9 @@ let sections = [
   }
 
   .content {
-    height: 100vh;
+    height: 95vh;
     width: 45vw;
-    border: cyan 3px solid;
+    border: black 3px solid;
     position: absolute;
     left: 53%;
   }
@@ -218,10 +237,48 @@ let sections = [
     margin-top: 20px;
   }
 
-  .section-image{
+  /* .section-image{
     max-width: 100%; 
     max-height: 40vh; 
     object-fit: contain;
     margin-top: 20px;
+  } */
+
+  .cavaliers-image{
+    max-width: 80%; 
+    max-height: 40vh; 
+    object-fit: contain;
+    margin-top: 10px;
   }
+  .draft-image{
+    max-width: 80%; 
+    max-height: 30vh; 
+    object-fit: contain;
+    margin-top: 10px;
+  }
+  .heat-image{
+    max-width: 80%; 
+    max-height: 40vh; 
+    object-fit: contain;
+    margin-top: 10px;
+  }
+  .cavaliers-image{
+    max-width: 80%; 
+    max-height: 45vh; 
+    object-fit: contain;
+    margin-top: 10px;
+  }
+  .la-image{
+    max-width: 80%; 
+    max-height: 40vh; 
+    object-fit: contain;
+    margin-top: 10px;
+  }
+  .origins-image{
+    max-width: 80%; 
+    max-height: 60vh; 
+    object-fit: contain;
+    margin-top: 10px;
+  }
+
 </style>
