@@ -28,12 +28,7 @@
 - NBA Eastern Conference Champion (2007)
 - NBA All-Star Game MVP (2006, 2008)
 - Multiple NBA All-Star selections
-- NBA Scoring Champion (2008)
-Return to Cleveland Cavaliers
-- NBA Champion (2016)
-- NBA Eastern Conference Champion (2015–2018)
-- Multiple NBA All-Star selections
-- NBA Finals MVP (2016)`,
+- NBA Scoring Champion (2008)`,
       imageURL: "images/Cleveland_Cavaliers_logo.svg.png",
       color: "#860038",
       iconSize: 0.05,
@@ -69,7 +64,7 @@ Return to Cleveland Cavaliers
 - NBA Finals MVP (2020)
 - Selected to the NBA All-Star team each year
 - Multiple All-NBA First Team selections`,
-      imageURL: "images/lakers-transparent.webp",
+      imageURL: "images/lakers-transparent copy.png",
       color: "#FDB927",
       iconSize: 0.1,
     }
@@ -80,7 +75,7 @@ Return to Cleveland Cavaliers
       container: mapContainer,
       style: 'mapbox://styles/mapbox/light-v10',
       center: [-97.2263, 37.7091],
-      zoom: 5
+      zoom: 3.5
     });
 
     map.on('load', async () => {
@@ -117,7 +112,9 @@ Return to Cleveland Cavaliers
               source: `point${i}`,
               layout: {
                 'icon-image': `locationImage${i}`,
-                'icon-size': location.iconSize || 0.15 // Adjust the size of the image
+                'icon-size': location.iconSize || 0.15, // Adjust the size of the image
+                'icon-allow-overlap': true,
+                'icon-ignore-placement': true
               }
             });
 
@@ -225,7 +222,7 @@ Return to Cleveland Cavaliers
 
 <style>
   .map {
-    width: 70%;
+    width: 100%;
     height: 500px;
   }
 </style>
