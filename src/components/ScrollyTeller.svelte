@@ -174,10 +174,45 @@ let sections = [
         {/if}
       </section>
     {/each}
-    <section class="map-accolades">
-      <h1>Map</h1>
-      <MapOvr/>
-      <!-- <img src='images/lob.webp' alt='LeBron James' class="section-image"/> -->
+    <section class="container">
+      <div class="map-accolades">
+          <div class="map-container">
+              <h1>LeBron's Jouney And Accolades Throughout His Career</h1>
+              <p> </p>
+              <MapOvr/>
+          </div>
+          <div class="conclusion">
+              <h2>Conclusion</h2>
+              <h3>LEBRON IS THE GOAT</h3>
+          </div>
+      </div>
+  
+      <aside class="accolades-list">
+          <h3>LeBron's NBA Accolades</h3>
+          <ul>
+            <li>4× NBA champion (2012, 2013, 2016, 2020)</li>
+            <li>4× NBA Finals MVP (2012, 2013, 2016, 2020)</li>
+            <li>4× NBA Most Valuable Player (2009, 2010, 2012, 2013)</li>
+            <li>20× NBA All-Star (2005–2024)</li>
+            <li>3× NBA All-Star Game MVP (2006, 2008, 2018)</li>
+            <li>13× All-NBA First Team (2006, 2008–2018, 2020)</li>
+            <li>3× All-NBA Second Team (2005, 2007, 2021)</li>
+            <li>3× All-NBA Third Team (2019, 2022, 2023)</li>
+            <li>5× NBA All-Defensive First Team (2009–2013)</li>
+            <li>NBA All-Defensive Second Team (2014)</li>
+            <li>NBA Rookie of the Year (2004)</li>
+            <li>NBA All-Rookie First Team (2004)</li>
+            <li>NBA scoring champion (2008)</li>
+            <li>NBA assists leader (2020)</li>
+            <li>NBA 75th Anniversary Team</li>
+            <li>AP Athlete of the Decade (2010s)</li>
+            <li>4× AP Athlete of the Year (2013, 2016, 2018, 2020)</li>
+            <li>3× Sports Illustrated Sportsperson of the Year (2012, 2016, 2020)</li>
+            <li>USA Basketball Male Athlete of the Year (2012)</li>
+            <li>NBA In Season Tournament Champion (2024)</li>
+            <li>NBA In Season Tournament MVP (2024)</li>
+        </ul>
+      </aside>
     </section>
   </div>
 </Scroller>
@@ -205,7 +240,6 @@ let sections = [
     margin: 0 auto;
     height: auto;
     position: relative;
-    /* background-color: rgb(235, 229, 221); */
   }
 
   .hero h1 {
@@ -279,6 +313,55 @@ let sections = [
     max-height: 60vh; 
     object-fit: contain;
     margin-top: 10px;
+  }
+  .container {
+    display: grid;
+    grid-template-columns: 3fr 1fr; 
+    grid-template-rows: auto 1fr; /* Auto for the header, 1fr for the content */
+    gap: 20px; /* Space between grid items */
+    height: 95vh; /* Full viewport height */
+  }
+
+  .map-accolades {
+      display: flex;
+      flex-direction: column; /* Stack children vertically */
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .map-container {
+      animation: fadeIn 1s ease-out forwards;
+  }
+
+  .map-container, .conclusion {
+      flex-grow: 1; /* Allow these elements to fill available space */
+  }
+
+  @keyframes slideInLeft {
+    from { transform: translateX(-100%); }
+    to { transform: translateX(0); }
+  }
+
+  .accolades-list {
+      animation: slideInLeft 1s ease-out forwards;
+      background-color: #f2f2f2; /* Light grey background for contrast */
+      border-radius: 8px; /* Optional: adds rounded corners */
+      height: 95vh;
+      padding-left: 20px;
+      padding-right: 20px;
+  }
+  @keyframes slideInBottom {
+    from { transform: translateY(100%); }
+    to { transform: translateY(0); }
+  }
+
+  .conclusion {
+      animation: slideInBottom 1s ease-out forwards;
+  }
+  li{
+    padding: 0.5px
   }
 
 </style>

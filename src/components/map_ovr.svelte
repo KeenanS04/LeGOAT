@@ -75,7 +75,8 @@
       container: mapContainer,
       style: 'mapbox://styles/mapbox/light-v10',
       center: [-97.2263, 37.7091],
-      zoom: 3.5
+      zoom: 3.5,
+      minZoom: 3.5
     });
 
     map.on('load', async () => {
