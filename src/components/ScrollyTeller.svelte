@@ -77,14 +77,17 @@ let sections = [
     // },
     {
       title: 'The L.A story: Cementing a Legacy (2018 - Present)',
-      content: `With the Lakers, LeBron's narrative took on a new dimension. His leadership and experience helped capture the 2020 NBA Championship, a poignant triumph in the wake of Kobe Bryant's tragic passing. He continued to break records, becoming the oldest player to average a triple-double over an entire month. LeBron also earned his 17th All-Star selection in 2021, tying with Kobe Bryant and trailing only Kareem Abdul-Jabbar and Karl Malone.
+      content: `With the Lakers, LeBron's narrative took on a new dimension. His leadership and experience helped capture the 2020 NBA Championship, a poignant triumph in the wake of Kobe Bryant's tragic passing. He continued to break records, becoming the oldest player to average a triple-double over an entire month. LeBron also earned his 17th All-Star selection in 2021, tying with Kobe Bryant and trailing only Kareem Abdul-Jabbar and Karl Malone. The lakers also won the inaugral In Season Tournament with LeBron finishing with tourney MVP.
       
-      In 2022, at the age of 37, LeBron achieved a historic milestone by becoming the all-time leading scorer in NBA Playoffs history, surpassing Michael Jordan. On February 7, 2023, LeBron James made history by surpassing Kareem Abdul-Jabbar to become the NBA's all-time leading scorer, using his signature fadeaway jumper to seal the record. As of February 29, 2024, he is just 40 points away from reaching the unprecedented milestone of 40,000 career points, poised to set yet another record in his illustrious career.
-      
-      Off the hardwood, LeBron's impact has been felt in education through his "I PROMISE School," philanthropy, and activism, particularly in his staunch advocacy for racial justice and voter rights. His media company, SpringHill Entertainment, produced the movie "Space Jam: A New Legacy," where he starred as the lead, blending his athletic and artistic pursuits.`,
+      In 2022, at the age of 37, LeBron achieved a historic milestone by becoming the all-time leading scorer in NBA Playoffs history, surpassing Michael Jordan. On February 7, 2023, LeBron James made history by surpassing Kareem Abdul-Jabbar to become the NBA's all-time leading scorer, using his signature fadeaway jumper to seal the record. As of February 29, 2024, he is just 40 points away from reaching the unprecedented milestone of 40,000 career points, poised to set yet another record in his illustrious career.`,
       imageUrl: 'images/lakerBron.webp',
       imageClass: 'la-image'
     },
+    // {
+    //   title: 'Legacy',
+    //   content: `Off the hardwood, LeBron's impact has been felt in education through his "I PROMISE School," philanthropy, and activism, particularly in his staunch advocacy for racial justice and voter rights. His media company, SpringHill Entertainment, produced the movie "Space Jam: A New Legacy," where he starred as the lead, blending his athletic and artistic pursuits.`,
+    //   imageUrl: '/path/to/image1.jpg'
+    // },
   ];
 
   async function loadData() {
@@ -134,6 +137,10 @@ let sections = [
     loadData();
   });
 
+  $: fadeInClass = index > sections.length-1 ? 'fadeInAnimation' : '';
+  $: slideInLeftClass = index > sections.length-1 ? 'slideInLeftAnimation' : '';
+  $: slideInBottomClass = index > sections.length-1 ? 'slideInBottomAnimation' : '';
+
 </script>
 
 <Scroller
@@ -156,13 +163,19 @@ let sections = [
     
   <div class="foreground" slot="foreground">
     <section class="hero">
-      <h1>LeGOAT: The LeBron James Story</h1>
-      <img src='images/lob.webp' alt='LeBron James' class="section-image"/>
+      <h1>LeGOAT: The LeBron James's Career Narrative</h1>
+      <h2 class='subhead'>Is LeBron James's Unparalleled Scoring Prowess the Defining Factor of His Claim to the Basketball Throne?</h2>
+      <img src='images/lob.webp' alt='LeBron James' class="header-image"/>
+      <iframe width="420" height="315"
+              src="https://www.youtube.com/watch?v=wze5XLenrSc"
+              title="LeBron James Highlight Reel"
+              class="header-image">
+      </iframe>
     </section>
     {#each sections as section, i}
       <section class="scrollable-section">
         {#if i+1 === index}
-          <div class="content" in:fade={{duration: 400 }} out:fade={{duration: 900 }}>
+          <div class="content" in:fade={{duration: 400 }} out:fade={{duration: 500 }}>
             <h1>{section.title}</h1>
             <p class='left'>{section.content}</p>
             <div>
@@ -176,19 +189,19 @@ let sections = [
     {/each}
     <section class="container">
       <div class="map-accolades">
-          <div class="map-container">
+          <div class="map-container" {fadeInClass}>
               <h1>LeBron's Jouney And Accolades Throughout His Career</h1>
-              <p> </p>
+              <p> Click on each logo to check out LeBron's Individual Accolades</p>
               <MapOvr/>
           </div>
-          <div class="conclusion">
+          <div class="conclusion" {slideInLeftClass}>
               <h2>Conclusion</h2>
               <h3>LEBRON IS THE GOAT</h3>
           </div>
       </div>
   
-      <aside class="accolades-list">
-          <h3>LeBron's NBA Accolades</h3>
+      <aside class="accolades-list" {slideInBottomClass}>
+          <h3 style="text-align: center;">LeBron's NBA Accolades</h3>
           <ul>
             <li>4× NBA champion (2012, 2013, 2016, 2020)</li>
             <li>4× NBA Finals MVP (2012, 2013, 2016, 2020)</li>
@@ -219,15 +232,57 @@ let sections = [
 
 <style>
   @import 'https://fonts.googleapis.com/css?family=Shrikhand|Yantramanav';
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap');
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes slideInLeft {
+    from { transform: translateX(-100%); }
+    to { transform: translateX(0); }
+  }
+  @keyframes slideInBottom {
+    from { transform: translateY(100%); }
+    to { transform: translateY(0); }
+  }
+
+  @keyframes slideInFromLeft {
+    from { transform: translateX(-100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+  }
+
+  @keyframes slideInFromTop {
+    from { transform: translateY(-100%); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+
+  /* .slideInFromLeft {
+    animation: slideInFromLeft 1s ease-out forwards;
+  }
+
+  .slideInFromTop {
+    animation: slideInFromTop 1s ease-out forwards;
+  } */
+
+  .background {
+    background-image: url("bg.jpeg");
+    height: 100vh;
+    width: 100%;
+  }
+  .subhead {
+    animation: slideInFromTop 0.5s ease-out forwards;
+  }
   section {
     font-family: 'Yantramanav', sans-serif;
     height: 100vh;
-    border: maroon 3px solid;
+    border: maroon 6px solid;
     text-align: center;
     max-width: 100%; 
     color: black;
     padding: 2em;
     margin: 0 0 0 0;
+    border-radius: 6px;
   }
 
   .scrollable-section {
@@ -253,11 +308,32 @@ let sections = [
   }
 
   .content {
-    height: 95vh;
+    height: 93vh;
     width: 45vw;
-    border: black 3px solid;
+    /* border: black 1px solid; */
     position: absolute;
     left: 53%;
+    border-radius: 5px;
+    background-color: #f9f0e1;
+    /* background-color: #fbf6ed; */
+  }
+
+  .content::before {
+    content: '';
+    position: absolute;
+    right: 101.5%;
+    width: 2px; 
+    background-color: black; 
+    height: 99%;
+  }
+  .content::after {
+    content: '';
+    position: absolute;
+    left: -116%;
+    right: 103%;
+    top: 52.5%;
+    height: 2px;
+    background-color: black;
   }
 
   .content h1 {
@@ -269,14 +345,15 @@ let sections = [
     text-align: center;
     font-size: 20px;
     margin-top: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
   }
 
-  /* .section-image{
-    max-width: 100%; 
-    max-height: 40vh; 
-    object-fit: contain;
-    margin-top: 20px;
-  } */
+  .header-image{
+    animation: slideInBottom 0.5s ease-out forwards;
+    height: 40%;
+    margin: 10px;
+  }
 
   .cavaliers-image{
     max-width: 80%; 
@@ -294,19 +371,16 @@ let sections = [
     max-width: 80%; 
     max-height: 40vh; 
     object-fit: contain;
-    margin-top: 10px;
   }
   .cavaliers-image{
     max-width: 80%; 
     max-height: 45vh; 
     object-fit: contain;
-    margin-top: 10px;
   }
   .la-image{
     max-width: 80%; 
-    max-height: 40vh; 
+    max-height: 30vh; 
     object-fit: contain;
-    margin-top: 10px;
   }
   .origins-image{
     max-width: 80%; 
@@ -326,42 +400,73 @@ let sections = [
       display: flex;
       flex-direction: column; /* Stack children vertically */
   }
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
 
   .map-container {
-      animation: fadeIn 1s ease-out forwards;
+      animation: fadeIn 0.5s ease-out forwards;
   }
 
   .map-container, .conclusion {
       flex-grow: 1; /* Allow these elements to fill available space */
   }
 
-  @keyframes slideInLeft {
-    from { transform: translateX(-100%); }
-    to { transform: translateX(0); }
-  }
-
   .accolades-list {
-      animation: slideInLeft 1s ease-out forwards;
-      background-color: #f2f2f2; /* Light grey background for contrast */
+      animation: slideInLeft 0.5s ease-out forwards;
+      background-color: #f9f0e1; /* Light grey background for contrast */
       border-radius: 8px; /* Optional: adds rounded corners */
       height: 95vh;
       padding-left: 20px;
       padding-right: 20px;
+      text-align: left;
   }
-  @keyframes slideInBottom {
-    from { transform: translateY(100%); }
-    to { transform: translateY(0); }
+  .accolades-list::before {
+    content: '';
+    position: absolute;
+    right: 102%;
+    width: 2px; 
+    background-color: black; 
+    height: 99%;
   }
 
   .conclusion {
-      animation: slideInBottom 1s ease-out forwards;
+      animation: slideInBottom 0.5s ease-out forwards;
   }
   li{
     padding: 0.5px
   }
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5em; 
+    font-weight: 700; 
+  }
+
+  
+
+  /* h1, h2, h3 {
+    font-family: 'Playfair Display', serif;
+    color: #333; 
+    margin: 0.5em 0; 
+  }
+
+  h1 {
+    font-size: 2.5em; 
+    font-weight: 700; 
+  }
+
+  h2 {
+    font-size: 2em; 
+    font-weight: 700;
+  }
+
+  h3 {
+    font-size: 1.75em;
+    font-weight: 700; 
+  }
+
+  p {
+    font-family: 'Playfair Display', serif;
+    font-size: 12px; 
+    color: #333; 
+    margin: 0 0 1em 0; 
+  } */
 
 </style>

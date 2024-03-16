@@ -17,7 +17,7 @@
 - McDonald's All-American Game MVP (2003)
 - National High School Player of the Year (2003)`,
       imageURL: "images/svsm.png",
-      color: "#FFC627",
+      color: "#006400",
       iconSize: 0.15,
     },
     {
@@ -30,7 +30,7 @@
 - Multiple NBA All-Star selections
 - NBA Scoring Champion (2008)`,
       imageURL: "images/Cleveland_Cavaliers_logo.svg.png",
-      color: "#860038",
+      color: "#98002E",
       iconSize: 0.05,
     },
     {
@@ -43,7 +43,7 @@
 - Selected to the NBA All-Star team each year
 - Multiple All-NBA First Team selections`,
       imageURL: "images/Miami-Heat-logo.png",
-      color: "#98002E",
+      color: "#860038",
       iconSize: 0.1
     },
     {
@@ -54,7 +54,7 @@
 - Multiple NBA All-Star selections
 - NBA Finals MVP (2016)`,
       imageURL: "images/Cleveland_Cavaliers_logo.svg.png",
-      color: "#860038",
+      color: "#FDB927",
       iconSize: 0.05,
     },
     {
@@ -70,6 +70,36 @@
     }
   ];
 
+  // function addSolidLineFromAkronToCleveland(map) {
+  //   const akronCoords = locations.find(location => location.description.includes('Akron')).coords;
+  //   const clevelandCoords = locations.find(location => location.description.includes('Cleveland')).coords;
+
+  //   const lineFeature = {
+  //       'type': 'Feature',
+  //       'properties': {},
+  //       'geometry': {
+  //           'type': 'LineString',
+  //           'coordinates': [akronCoords, clevelandCoords]
+  //       }
+  //   };
+
+  //   map.addSource('akronToClevelandLine', {
+  //       'type': 'geojson',
+  //       'data': lineFeature
+  //   });
+
+  //   map.addLayer({
+  //       'id': 'akronToClevelandLineLayer',
+  //       'type': 'line',
+  //       'source': 'akronToClevelandLine',
+  //       'layout': {},
+  //       'paint': {
+  //           'line-color': '#006400',
+  //           'line-width': 4
+  //       }
+  //   });
+  // }
+
   onMount(() => {
     const map = new mapboxgl.Map({
       container: mapContainer,
@@ -79,7 +109,20 @@
       minZoom: 3.5
     });
 
+    map.scrollZoom.disable();
+    map.dragPan.disable();
+    map.dragRotate.disable();
+    map.keyboard.disable();
+    map.doubleClickZoom.disable();
+    map.touchZoomRotate.disable();
+
     map.on('load', async () => {
+      // addSolidLineFromAkronToCleveland(map);
+      for (let i = 0; i < locations.length - 1; i++) {
+        const startLocation = locations[i];
+        const endLocation = locations[i + 1];
+        await animateLineBetweenPoints(map, startLocation, endLocation, i);
+      }
       for (let i = 0; i < locations.length; i++) {
         await new Promise((resolve, reject) => {
           map.loadImage(locations[i].imageURL, (error, image) => {
@@ -97,7 +140,7 @@
                 features: [{
                   type: 'Feature',
                   properties: {
-                    description: locations[i].description,
+                    description:locations[i].description,
                   },
                   geometry: {
                     type: 'Point',
@@ -140,18 +183,13 @@
       }
 
       // Animate lines after all images have been loaded
-      for (let i = 0; i < locations.length - 1; i++) {
-        const startLocation = locations[i];
-        const endLocation = locations[i + 1];
-        await animateLineBetweenPoints(map, startLocation, endLocation, i);
-      }
     });
   });
 
   function animateLineBetweenPoints(map, startLocation, endLocation, index) {
     const start = startLocation.coords;
     const end = endLocation.coords;
-    const color = endLocation.color;
+    const color = startLocation.color;
 
     const midPoint = [
       (start[0] + end[0]) / 2, 
