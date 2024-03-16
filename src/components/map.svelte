@@ -85,8 +85,8 @@
   }
 
   function drawJourneyLine() {
-    if (index <= 1 || index >= locations.length) return; // No line to draw for the first index (Akron)
-
+    if (index <= 1) return; // No line to draw for the first index (Akron)
+    index = Math.min(index, locations.length - 1);
     const from = locations[index - 1].coords;
     const to = locations[index].coords;
     let color = locations[index].color; // Color of the destination team
@@ -165,6 +165,9 @@
   }
 
   $: if (map && map.isStyleLoaded() && index) {
+    if (index > locations.length - 1) {
+      index = locations.length - 1;
+    }
     currentLocation = locations[index];
     console.log("fly to", currentLocation);
     map.flyTo({ center: currentLocation.coords, zoom: zoomLevel });

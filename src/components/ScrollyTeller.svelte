@@ -19,7 +19,7 @@
   let visualizations_hidden = true;
   $: console.log(index);
   $: {
-    if (index === 0) {
+    if (index === 0 || index > sections.length) {
       visualizations_hidden = true;
     } else if (offset > .6) {
       visualizations_hidden = false;
@@ -129,10 +129,6 @@ let sections = [
   // currentSection = sections[currentIndex] || sections[0];
   // $: console.log("Current index:", index);
 
-  let showMapAndChart = true;
-
-  $: showMapAndChart = index <= sections.length;
-
   onMount(() => {
     loadData();
   });
@@ -154,10 +150,8 @@ let sections = [
 >
   <div class="background" slot="background" bind:clientWidth={width} bind:clientHeight={height}>
     <div style="transition: opacity 0.5s; opacity: {visualizations_hidden ? 0 : 1}">
-      {#if showMapAndChart}
         <MapComp {index}/>
         <ScoringLeadersChart {chartData} {index}/>
-      {/if}
     </div>
   </div>
     
@@ -231,6 +225,7 @@ let sections = [
 </Scroller>
 
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
   @import 'https://fonts.googleapis.com/css?family=Shrikhand|Yantramanav';
   @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap');
 
@@ -266,7 +261,10 @@ let sections = [
   } */
 
   .background {
-    background-image: url("bg.jpeg");
+    background: rgb(255,185,161);
+    background: linear-gradient(90deg, rgba(255,185,161,1) 0%, rgba(252,255,136,1) 50%, rgba(255,185,161,1) 100%);
+    background-size: cover;
+    background-position: center;
     height: 100vh;
     width: 100%;
   }
@@ -276,7 +274,6 @@ let sections = [
   section {
     font-family: 'Yantramanav', sans-serif;
     height: 100vh;
-    border: maroon 6px solid;
     text-align: center;
     max-width: 100%; 
     color: black;
@@ -314,11 +311,16 @@ let sections = [
     position: absolute;
     left: 53%;
     border-radius: 5px;
-    background-color: #f9f0e1;
+    background-color: rgba(255, 255, 255, 0.5);
     /* background-color: #fbf6ed; */
   }
 
-  .content::before {
+  .content h1 {
+    font-size: 2em;
+    margin-top: 20px;
+  }
+
+  /* .content::before {
     content: '';
     position: absolute;
     right: 101.5%;
@@ -334,7 +336,7 @@ let sections = [
     top: 52.5%;
     height: 2px;
     background-color: black;
-  }
+  } */
 
   .content h1 {
     font-size: 2em;
@@ -418,14 +420,14 @@ let sections = [
       padding-right: 20px;
       text-align: left;
   }
-  .accolades-list::before {
+  /* .accolades-list::before {
     content: '';
     position: absolute;
     right: 102%;
     width: 2px; 
     background-color: black; 
     height: 99%;
-  }
+  } */
 
   .conclusion {
       animation: slideInBottom 0.5s ease-out forwards;
@@ -434,9 +436,11 @@ let sections = [
     padding: 0.5px
   }
   h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: 2.5em; 
-    font-weight: 700; 
+    font-family: 'Bebas Neue', sans-serif;
+    /* font-family: 'Playfair Display', serif; */
+    font-size: 3em; 
+    font-weight: 700;
+    letter-spacing: 2px;
   }
 
   

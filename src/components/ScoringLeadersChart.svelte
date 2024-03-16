@@ -63,7 +63,8 @@
       .attr("y", -10) 
       .attr("text-anchor", "middle")
       .style("font-size", "18px")
-      .style("font-family", "Yantramanav")
+      .style("font-family", "Bebas Neue")
+      .style("text-spacing", "2px")
       .text("All Time Scoring Chart");
 
     svg.append("g")
@@ -97,7 +98,7 @@
       .attr("y", d => y(d.player))
       .attr("width", d => x(d.score))
       .attr("height", y.bandwidth())
-      .attr("fill", d => d.player.includes('LeBron James') ? '#f76c6c' : '#a0c4ff')
+      .attr("fill", d => d.player.includes('LeBron James') ? '#f76c6c' : '#FF8C00') // dark color for other players
       .attr("rx", 5)
       .attr("ry", 5);
 
