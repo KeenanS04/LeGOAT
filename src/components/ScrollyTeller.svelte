@@ -185,7 +185,7 @@ let sections = [
       <div class="map-accolades">
           <div class="map-container" {fadeInClass}>
               <h1>LeBron's Jouney And Accolades Throughout His Career</h1>
-              <p> Click on each logo to check out LeBron's Individual Accolades</p>
+              <p> Click on each logo to check out LeBron's accolades on each team</p>
               <MapOvr/>
           </div>
           <div class="conclusion" {slideInLeftClass}>
@@ -260,14 +260,10 @@ let sections = [
     animation: slideInFromTop 1s ease-out forwards;
   } */
 
-  .background {
-    background: rgb(255,185,161);
-    background: linear-gradient(90deg, rgba(255,185,161,1) 0%, rgba(252,255,136,1) 50%, rgba(255,185,161,1) 100%);
-    background-size: cover;
-    background-position: center;
-    height: 100vh;
-    width: 100%;
+  :global(body) {
+    background: linear-gradient(to right, #7f8c8d, #bdc3c7, #7f8c8d);
   }
+
   .subhead {
     animation: slideInFromTop 0.5s ease-out forwards;
   }
@@ -413,7 +409,7 @@ let sections = [
 
   .accolades-list {
       animation: slideInLeft 0.5s ease-out forwards;
-      background-color: #f9f0e1; /* Light grey background for contrast */
+      background-color: rgba(255, 255, 255, 0.5);
       border-radius: 8px; /* Optional: adds rounded corners */
       height: 95vh;
       padding-left: 20px;

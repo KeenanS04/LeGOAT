@@ -98,7 +98,7 @@
       .attr("y", d => y(d.player))
       .attr("width", d => x(d.score))
       .attr("height", y.bandwidth())
-      .attr("fill", d => d.player.includes('LeBron James') ? '#f76c6c' : '#FF8C00') // dark color for other players
+      .attr("fill", d => d.player.includes('LeBron James') ? '#860038' : '#333') // dark color for other players
       .attr("rx", 5)
       .attr("ry", 5);
 
