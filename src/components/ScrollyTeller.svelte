@@ -165,7 +165,7 @@ let sections = [
       <section class="scrollable-section">
         {#if i+1 === index}
           <div class="content" in:fade={{duration: 400 }} out:fade={{duration: 500 }}>
-            <h1>{section.title}</h1>
+            <h1 class='title-content'>{section.title}</h1>
             <p class='left'>{section.content}</p>
             <div>
               {#if section.imageUrl}
@@ -178,18 +178,18 @@ let sections = [
     {/each}
     <section class="container">
       <div class="map-accolades">
-          <div class="map-container" {fadeInClass}>
+          <div class="map-container" in:fade={{duration: 700 }} out:fade={{duration: 500 }}>
               <h1>LeBron's Jouney And Accolades Throughout His Career</h1>
-              <p> Click on each logo to check out LeBron's accolades on each team</p>
+              <p class='annotation'> Click on each logo to check out LeBron's accolades on each team</p>
               <MapOvr/>
           </div>
-          <div class="conclusion" {slideInLeftClass}>
-              <h2>Conclusion</h2>
-              <p>LeBron came into the NBA with great expectations, and for the first part of his career he performed up to par with some of the greats in the game. But to solidify his legacy as a true legend of the sport, he needed to start winning more. Therefore he switched teams and worked together with other stars to win his first two championships with the Miami Heat. After completing everything in the books, LeBron wanted a name for himself and his city, and in his path stood the Warriors dynasty. Against all odds, he still ended up overcoming the Warriors to win a championship for his home team. In recent times, LeBron has done philanthropic work with his I Promise School and focused more on his family in LA. LeBron is the definition of growth, hard work, talent, and perseverance, and his journey proves just why he is the basketball GOAT.</p>
+          <div class="conclusion" in:fade={{duration: 700 }} out:fade={{duration: 500 }}>
+              <h2 class="conc-title">Conclusion</h2>
+              <p class='left'>LeBron came into the NBA with great expectations, and for the first part of his career he performed up to par with some of the greats in the game. But to solidify his legacy as a true legend of the sport, he needed to start winning more. Therefore he switched teams and worked together with other stars to win his first two championships with the Miami Heat. After completing everything in the books, LeBron wanted a name for himself and his city, and in his path stood the Warriors dynasty. Against all odds, he still ended up overcoming the Warriors to win a championship for his home team. In recent times, LeBron has done philanthropic work with his I Promise School and focused more on his family in LA. LeBron is the definition of growth, hard work, talent, and perseverance, and his journey proves just why he is the basketball GOAT.</p>
           </div>
       </div>
   
-      <aside class="accolades-list" {slideInBottomClass}>
+      <aside class="accolades-list" in:fade={{duration: 700 }} out:fade={{duration: 500 }}>
           <h3 style="text-align: center;">LeBron's NBA Accolades</h3>
           <ul>
             <li>4× NBA champion (2012, 2013, 2016, 2020)</li>
@@ -393,10 +393,12 @@ let sections = [
   .map-accolades {
       display: flex;
       flex-direction: column; /* Stack children vertically */
+      margin-top: -30px;
   }
 
   .map-container {
       animation: fadeIn 0.5s ease-out forwards;
+      margin-bottom: 20px;
   }
 
   .map-container, .conclusion {
@@ -423,6 +425,10 @@ let sections = [
 
   .conclusion {
       animation: slideInBottom 0.5s ease-out forwards;
+      background-color: rgba(255, 255, 255, 0.5);
+      border-radius: 8px;
+      padding: 10px;
+      margin-bottom: 10px;
   }
   li{
     padding: 0.5px
@@ -464,5 +470,17 @@ let sections = [
     color: #333; 
     margin: 0 0 1em 0; 
   } */
+  .annotation {
+    margin-top: -40px;
+    padding: 10px;
+  }
+  .conc-title{
+    margin-bottom: -7px;
+    margin-top: 3px;
+  }
+  .title-content{
+    padding-left: 5px;
+    padding-right: 5px;
+  }
 
 </style>

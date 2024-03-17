@@ -187,10 +187,10 @@
 <!-- TODO: add map background, wrap map div in other div for map-container -->
 <style>
   .map {
-    width: 50vw; /* width of the map is 50% of the viewport width */
-    height: 40vh; /* height of the map is 50% of the viewport height */
-    position: absolute; /* absolute positioning allows the map to be positioned relative to the nearest positioned ancestor */
-    transform: translate(3%, 140%); /* shift the map up and to the left by half its height and width, effectively centering it */
+    width: 50vw;
+    height: 40vh; 
+    position: absolute; 
+    transform: translate(3%, 140%);
     border: black 2px solid;
     border-radius: 5px;
   }

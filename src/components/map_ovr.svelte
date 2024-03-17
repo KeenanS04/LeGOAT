@@ -177,12 +177,11 @@
               map.getCanvas().style.cursor = '';
             });
 
-            resolve(); // Image loaded and layer added
+            resolve();
           });
         });
       }
 
-      // Animate lines after all images have been loaded
     });
   });
 
@@ -263,5 +262,7 @@
   .map {
     width: 100%;
     height: 500px;
+    border: 1px solid black;
+    border-radius: 5px;
   }
 </style>
