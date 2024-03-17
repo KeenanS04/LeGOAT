@@ -190,7 +190,7 @@ let sections = [
           </div>
           <div class="conclusion" {slideInLeftClass}>
               <h2>Conclusion</h2>
-              <h3>LEBRON IS THE GOAT</h3>
+              <p>LeBron came into the NBA with great expectations, and for the first part of his career he performed up to par with some of the greats in the game. But to solidify his legacy as a true legend of the sport, he needed to start winning more. Therefore he switched teams and worked together with other stars to win his first two championships with the Miami Heat. After completing everything in the books, LeBron wanted a name for himself and his city, and in his path stood the Warriors dynasty. Against all odds, he still ended up overcoming the Warriors to win a championship for his home team. In recent times, LeBron has done philanthropic work with his I Promise School and focused more on his family in LA. LeBron is the definition of growth, hard work, talent, and perseverance, and his journey proves just why he is the basketball GOAT.</p>
           </div>
       </div>
   
@@ -261,7 +261,7 @@ let sections = [
   } */
 
   :global(body) {
-    background: linear-gradient(to right, #7f8c8d, #bdc3c7, #7f8c8d);
+    background: linear-gradient(to right, #b0b9ba, #e6ebee, #b0b9ba);
   }
 
   .subhead {
@@ -306,6 +306,7 @@ let sections = [
     /* border: black 1px solid; */
     position: absolute;
     left: 53%;
+    border: black 2px solid;
     border-radius: 5px;
     background-color: rgba(255, 255, 255, 0.5);
     /* background-color: #fbf6ed; */
