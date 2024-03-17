@@ -160,11 +160,6 @@ let sections = [
       <h1>LeGOAT: The LeBron James's Career Narrative</h1>
       <h2 class='subhead'>Is LeBron James's Unparalleled Scoring Prowess the Defining Factor of His Claim to the Basketball Throne?</h2>
       <img src='images/lob.webp' alt='LeBron James' class="header-image"/>
-      <iframe width="420" height="315"
-              src="https://www.youtube.com/watch?v=wze5XLenrSc"
-              title="LeBron James Highlight Reel"
-              class="header-image">
-      </iframe>
     </section>
     {#each sections as section, i}
       <section class="scrollable-section">
@@ -350,7 +345,7 @@ let sections = [
 
   .header-image{
     animation: slideInBottom 0.5s ease-out forwards;
-    height: 40%;
+    height: 60%;
     margin: 10px;
   }
 
