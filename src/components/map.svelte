@@ -15,13 +15,13 @@
       name: "Akron",
       coords: [-81.5241, 41.0814],
       description: "Birthplace of LeBron James",
-      color: "#FFC627",
+      color: "#006400",
     },
     {
       name: "Akron",
       coords: [-81.5241, 41.0814],
       description: "Birthplace of LeBron James",
-      color: "#FFC627",
+      color: "#006400",
     },
     {
       name: "Cleveland",
@@ -49,11 +49,11 @@
     }
   ];
 
-  let currentLocation = locations[0]; // Default to Akron
+  let currentLocation = locations[0];
 
   function updateZoomLevel() {
     const screenWidth = window.innerWidth/2;
-    zoomLevel = screenWidth <= 600 ? 4 : 5.85; // Adjust these values as needed
+    zoomLevel = screenWidth <= 600 ? 4 : 5.85;
   }
 
   function handleResize() {
@@ -68,7 +68,7 @@
         style: "mapbox://styles/mapbox/light-v11",
         center: locations[0].coords,
         zoom: zoomLevel,
-        attributionControl: true, // removes attribution from the bottom of the map
+        attributionControl: true,
       });
 
       window.addEventListener("resize", handleResize);
@@ -85,23 +85,19 @@
   }
 
   function drawJourneyLine() {
-    if (index <= 1) return; // No line to draw for the first index (Akron)
+    if (index <= 1) return;
     index = Math.min(index, locations.length - 1);
     const from = locations[index - 1].coords;
     const to = locations[index].coords;
-    let color = locations[index].color; // Color of the destination team
+    let color = locations[index].color;
 
-    // Calculate intermediate point for the curve
     const midPointLat = (from[1] + to[1]) / 2;
     const midPointLng = (from[0] + to[0]) / 2;
 
-    // Adjust midPointLng to create curvature
-    // This adjustment factor controls the curve's "strength" and direction
-    const curveAdjustment = 2; // Adjust this value based on desired curvature
+    const curveAdjustment = 2;
     const midPointLngAdjusted =
       midPointLng + (index % 2 === 0 ? curveAdjustment : -curveAdjustment);
 
-    // Create more points for smoother curve
     const curvedCoordinates = [];
     for (let i = 0; i <= 100; i++) {
       const t = i / 100;
@@ -148,6 +144,8 @@
       });
     }
 
+    map.setPaintProperty("journeyLine", "line-color", color);
+
     let i = 0;
     const speed = 3;
     function animateLine() {
@@ -169,7 +167,6 @@
       index = locations.length - 1;
     }
     currentLocation = locations[index];
-    console.log("fly to", currentLocation);
     map.flyTo({ center: currentLocation.coords, zoom: zoomLevel });
     drawJourneyLine();
     drawPoint(currentLocation);
@@ -184,7 +181,7 @@
 </svelte:head>
 
 <div class="map" bind:this={container} />
-<!-- TODO: add map background, wrap map div in other div for map-container -->
+
 <style>
   .map {
     width: 50vw;

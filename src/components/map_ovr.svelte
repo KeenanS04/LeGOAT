@@ -69,37 +69,7 @@
       iconSize: 0.1,
     }
   ];
-
-  // function addSolidLineFromAkronToCleveland(map) {
-  //   const akronCoords = locations.find(location => location.description.includes('Akron')).coords;
-  //   const clevelandCoords = locations.find(location => location.description.includes('Cleveland')).coords;
-
-  //   const lineFeature = {
-  //       'type': 'Feature',
-  //       'properties': {},
-  //       'geometry': {
-  //           'type': 'LineString',
-  //           'coordinates': [akronCoords, clevelandCoords]
-  //       }
-  //   };
-
-  //   map.addSource('akronToClevelandLine', {
-  //       'type': 'geojson',
-  //       'data': lineFeature
-  //   });
-
-  //   map.addLayer({
-  //       'id': 'akronToClevelandLineLayer',
-  //       'type': 'line',
-  //       'source': 'akronToClevelandLine',
-  //       'layout': {},
-  //       'paint': {
-  //           'line-color': '#006400',
-  //           'line-width': 4
-  //       }
-  //   });
-  // }
-
+  
   onMount(() => {
     const map = new mapboxgl.Map({
       container: mapContainer,
@@ -117,7 +87,6 @@
     map.touchZoomRotate.disable();
 
     map.on('load', async () => {
-      // addSolidLineFromAkronToCleveland(map);
       for (let i = 0; i < locations.length - 1; i++) {
         const startLocation = locations[i];
         const endLocation = locations[i + 1];
@@ -156,7 +125,7 @@
               source: `point${i}`,
               layout: {
                 'icon-image': `locationImage${i}`,
-                'icon-size': location.iconSize || 0.15, // Adjust the size of the image
+                'icon-size': location.iconSize || 0.15,
                 'icon-allow-overlap': true,
                 'icon-ignore-placement': true
               }
@@ -178,10 +147,10 @@
             });
 
             resolve();
+            resolve();
           });
         });
       }
-
     });
   });
 
